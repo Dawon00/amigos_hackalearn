@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "612032563687",
+    "project_id": "amigos-hackalearn",
+    "storage_bucket": "amigos-hackalearn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612032563687:android:3124b9810aa0e7c66b5542",
+        "android_client_info": {
+          "package_name": "com.example.amigos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612032563687-pooldseo0m0rddiu8bkql3e8640jmfvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4pfVXDtXTCqkQ6uVDlrLbf3OT8qJZkt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612032563687-pooldseo0m0rddiu8bkql3e8640jmfvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
