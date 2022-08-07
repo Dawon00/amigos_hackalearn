@@ -1,4 +1,5 @@
 import 'package:amigos/screen/signup_screen.dart';
+import 'package:amigos/widget/input_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -38,21 +39,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 16,
               ),
               // email
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  hintText: 'Email',
-                ),
-                keyboardType: TextInputType.emailAddress,
+              InputField(
+                textEditingController: _emailController,
+                hintText: 'Email',
+                inputType: TextInputType.emailAddress,
               ),
               // password
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  hintText: 'Password',
-                ),
-                keyboardType: TextInputType.text,
-                obscureText: true,
+              InputField(
+                textEditingController: _passwordController,
+                hintText: 'Password',
+                isPassword: true,
               ),
               const SizedBox(
                 height: 16,
