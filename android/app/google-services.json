@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:612032563687:android:3124b9810aa0e7c66b5542",
+        "mobilesdk_app_id": "1:612032563687:android:559be274dceda7296b5542",
         "android_client_info": {
-          "package_name": "com.example.amigos"
+          "package_name": "com.example.amigos_hackalearn"
         }
       },
       "oauth_client": [

@@ -1,6 +1,6 @@
 {
-    "name": "amigos",
-    "short_name": "amigos",
+    "name": "amigos_hackalearn",
+    "short_name": "amigos_hackalearn",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

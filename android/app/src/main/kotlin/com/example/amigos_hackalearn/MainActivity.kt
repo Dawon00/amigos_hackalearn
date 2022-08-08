@@ -1,4 +1,4 @@
-package com.example.amigos
+package com.example.amigos_hackalearn
 
 import io.flutter.embedding.android.FlutterActivity
 

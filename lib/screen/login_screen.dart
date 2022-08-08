@@ -1,5 +1,5 @@
-import 'package:amigos/screen/signup_screen.dart';
-import 'package:amigos/widget/input_field.dart';
+import 'package:amigos_hackalearn/screen/signup_screen.dart';
+import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

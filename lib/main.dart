@@ -13,6 +13,7 @@ void main() async {
         appId: "1:612032563687:web:c848e0f1ab08287d6b5542",
         messagingSenderId: "612032563687",
         projectId: "amigos-hackalearn",
+        storageBucket: "amigos-hackalearn.appspot.com",
       ),
     );
   } else {
