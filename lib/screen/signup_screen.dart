@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:amigos_hackalearn/model/user.dart' as model;
+import 'package:amigos_hackalearn/screen/login_screen.dart';
 import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -146,7 +147,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         )
                       : const Text(
-                          'Log in',
+                          'Sign up',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -157,6 +158,38 @@ class _SignupScreenState extends State<SignupScreen> {
               Flexible(
                 flex: 2,
                 child: Container(),
+              ),
+              // login button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                    ),
+                    child: const Text("계정이 있나요? "),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                      ),
+                      child: const Text(
+                        "Log in",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
