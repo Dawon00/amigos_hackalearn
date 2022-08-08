@@ -26,11 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // 메인 컨텐츠 중앙 정렬을 위한 상단 마진
               Flexible(
                 flex: 2,
                 child: Container(),
               ),
-              // logo
+
+              // 메인 로고 이미지
               Image.asset(
                 'assets/light_logo.png',
                 height: 120,
@@ -38,13 +40,15 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 16,
               ),
-              // email
+
+              // 이메일 입력 필드
               InputField(
                 textEditingController: _emailController,
                 hintText: 'Email',
                 inputType: TextInputType.emailAddress,
               ),
-              // password
+
+              // 비밀번호 입력 필드
               InputField(
                 textEditingController: _passwordController,
                 hintText: 'Password',
@@ -53,8 +57,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 16,
               ),
-              // login button
+
+              // 로그인 버튼
               InkWell(
+                // tap 이벤트 발생시 로그인 진행
                 onTap: () async {
                   setState(() {
                     _isLoading = true;
@@ -66,12 +72,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
 
                   if (res == "success") {
+                    if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => Text(res),
                       ),
                     );
                   } else {
+                    if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(res),
@@ -83,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     _isLoading = false;
                   });
                 },
+                // 로그인 버튼 UI
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -110,11 +119,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                 ),
               ),
+
+              // 메인 컨텐츠 중앙 정렬을 위한 하단 마진
               Flexible(
                 flex: 2,
                 child: Container(),
               ),
-              // signup button
+
+              // 가입 창으로 이동
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -160,6 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
   }
 
+  // 로그인 함수
   Future<String> loginUser({
     required String email,
     required String password,
@@ -167,18 +180,25 @@ class _LoginScreenState extends State<LoginScreen> {
     late String res;
 
     try {
-      final FirebaseAuth _auth = FirebaseAuth.instance;
+      final FirebaseAuth auth = FirebaseAuth.instance;
 
+      // 이메일, 비밀번호가 모두 비어있지 않은 경우
       if (email.isNotEmpty && password.isNotEmpty) {
-        await _auth.signInWithEmailAndPassword(
+        // 로그인 진행
+        await auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
+        // 성공 메시지 반환
         res = "success";
-      } else {
+      }
+      // 데이터가 비어있을 경우 비어있음을 알리는 메시지 반환
+      else {
         res = "Please enter all the fields";
       }
-    } catch (e) {
+    }
+    // 오류 발생시 오류 메시지 반환
+    catch (e) {
       res = e.toString();
     }
 

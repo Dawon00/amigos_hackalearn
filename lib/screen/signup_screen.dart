@@ -34,11 +34,13 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // 메인 컨텐츠 중앙 정렬을 위한 상단 마진
               Flexible(
                 flex: 2,
                 child: Container(),
               ),
-              // logo
+
+              // 메인 로고 이미지
               Image.asset(
                 'assets/light_logo.png',
                 height: 120,
@@ -46,9 +48,11 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 16,
               ),
-              // image field
+
+              // 프로필 이미지 선택 기능
               Stack(
                 children: [
+                  // 프로필 이미지 선택 UI
                   _image != null
                       ? CircleAvatar(
                           radius: 64,
@@ -62,6 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     bottom: -10,
                     left: 80,
                     child: IconButton(
+                      // 이미지 선택 기능
                       onPressed: () async {
                         Uint8List img = await pickImage(ImageSource.gallery);
 
@@ -74,18 +79,21 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ],
               ),
-              // username field
+
+              // 사용자 이름 입력 필드
               InputField(
                 textEditingController: _usernameController,
                 hintText: 'Username',
               ),
-              // email field
+
+              // 이메일 입력 필드
               InputField(
                 textEditingController: _emailController,
                 hintText: 'Email',
                 inputType: TextInputType.emailAddress,
               ),
-              // password field
+
+              // 비밀번호 입력 필드
               InputField(
                 textEditingController: _passwordController,
                 hintText: 'Password',
@@ -94,8 +102,10 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 16,
               ),
-              // signup button
+
+              // 가입 버튼
               InkWell(
+                // tap 이벤트 발생시 가입 진행
                 onTap: () async {
                   setState(() {
                     _isLoading = true;
@@ -111,12 +121,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       : 'Please select your profile image';
 
                   if (res == "success") {
+                    if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => Text(res),
                       ),
                     );
                   } else {
+                    if (!mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(res),
@@ -128,6 +140,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     _isLoading = false;
                   });
                 },
+                // 가입 버튼 UI
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -155,11 +168,14 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                 ),
               ),
+
+              // 메인 컨텐츠 중앙 정렬을 위한 하단 마진
               Flexible(
                 flex: 2,
                 child: Container(),
               ),
-              // login button
+
+              // 로그인 창으로 이동
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -206,6 +222,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _usernameController.dispose();
   }
 
+  // 이미지 선택 및 바이트의 리스트 형태로 반환
   Future pickImage(ImageSource source) async {
     final ImagePicker imagePicker = ImagePicker();
 
@@ -216,6 +233,7 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
+  // 회원가입 함수
   Future<String> signUpUser({
     required String email,
     required String password,
@@ -225,27 +243,33 @@ class _SignupScreenState extends State<SignupScreen> {
     late String res;
 
     try {
-      final FirebaseAuth _auth = FirebaseAuth.instance;
-      final FirebaseStorage _storage = FirebaseStorage.instance;
-      final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final FirebaseStorage storage = FirebaseStorage.instance;
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+      // 필수 데이터가 비어있을 경우 비어있음을 알리는 메시지 반환
       if (email.isEmpty ||
           password.isEmpty ||
           username.isEmpty ||
           file.isEmpty) {
         res = "Please enter all the fields";
-      } else {
-        UserCredential cred = await _auth.createUserWithEmailAndPassword(
+      }
+      // 데이터가 모두 들어있을 경우
+      else {
+        // Authentication에 User 생성
+        UserCredential cred = await auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
 
+        // 프로필 이미지 업로드
         Reference ref =
-            _storage.ref().child('profileImages').child(_auth.currentUser!.uid);
+            storage.ref().child('profileImages').child(auth.currentUser!.uid);
         UploadTask uploadTask = ref.putData(file);
         TaskSnapshot snapshot = await uploadTask;
         String photoUrl = await snapshot.ref.getDownloadURL();
 
+        // User 모델 생성
         model.User user = model.User(
           email: email,
           uid: cred.user!.uid,
@@ -255,13 +279,17 @@ class _SignupScreenState extends State<SignupScreen> {
           saved: 0,
         );
 
-        await _firestore.collection('users').doc(cred.user!.uid).set(
+        // User 모델을 json으로 직렬화 하여 database에 저장
+        await firestore.collection('users').doc(cred.user!.uid).set(
               user.toJson(),
             );
 
+        // 성공 메시지 반환
         res = "success";
       }
-    } catch (e) {
+    }
+    // 오류 발생시 오류 메시지 반환
+    catch (e) {
       res = e.toString();
     }
 
