@@ -45,6 +45,7 @@ class Post {
       saved: snapshot["saved"],
     );
   }
+
   Post fromJson(Map<String, dynamic> json) => Post(
       id: json['id'],
       postTitle: json['postTitle'],
@@ -55,7 +56,7 @@ class Post {
       content: json['content'],
       saved: json['saved']);
 
-      Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "postTitle": postTitle,
         "dateTime": dateTime,
@@ -63,10 +64,8 @@ class Post {
         "profileImg": profileImg,
         "author": author,
         "content": content,
-        "saved" : saved,
+        "saved": saved,
       };
-      @override
+  @override
   String toString() => "Post<$postTitle>";
-}
-
 }
