@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:amigos_hackalearn/model/user.dart' as model;
+import 'package:amigos_hackalearn/screen/index_screen.dart';
 import 'package:amigos_hackalearn/screen/login_screen.dart';
 import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -124,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Text(res),
+                        builder: (context) => const IndexScreen(),
                       ),
                     );
                   } else {

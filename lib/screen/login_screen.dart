@@ -1,3 +1,4 @@
+import 'package:amigos_hackalearn/screen/index_screen.dart';
 import 'package:amigos_hackalearn/screen/signup_screen.dart';
 import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -75,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (!mounted) return;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => Text(res),
+                        builder: (context) => const IndexScreen(),
                       ),
                     );
                   } else {
