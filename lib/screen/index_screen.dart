@@ -16,9 +16,9 @@ class _IndexScreenState extends State<IndexScreen> {
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
       const BottomNavigationBarItem(
-          icon: Icon(Icons.view_day_rounded), label: '물물 교환'),
+          icon: Icon(Icons.view_day_rounded), label: '피드'),
       const BottomNavigationBarItem(
-          icon: Icon(Icons.child_care_rounded), label: '내 정보')
+          icon: Icon(Icons.child_care_rounded), label: '마이 페이지')
     ];
   }
 
