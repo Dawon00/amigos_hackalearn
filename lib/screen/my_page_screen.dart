@@ -28,6 +28,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
           .doc(widget.uid)
           .get();
       user = model.User.fromSnap(userSnap);
+      print(user.photoUrl);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -106,10 +107,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     TextButton(
                                       onPressed: () {
                                         if (!mounted) return;
-                                        Navigator.of(context).pushReplacement(
+                                        Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const ProfileEditScreen(),
+                                                ProfileEditScreen(user: user),
                                           ),
                                         );
                                       },
@@ -117,9 +118,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     ),
                                     TextButton(
                                       onPressed: () async {
-                                        FirebaseAuth _auth =
+                                        FirebaseAuth auth =
                                             FirebaseAuth.instance;
-                                        await _auth.signOut();
+                                        await auth.signOut();
                                         if (!mounted) return;
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
