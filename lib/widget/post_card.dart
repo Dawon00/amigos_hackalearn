@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import '../model/post.dart';
 
 class PostCard extends StatelessWidget {
-  //final Post post;
-  //const PostCard({Key? key, required this.post}) : super(key: key);
-  const PostCard({Key? key}) : super(key: key);
+  final Post post;
+  const PostCard({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +20,14 @@ class PostCard extends StatelessWidget {
             child: Column(children: <Widget>[
               ListTile(
                 leading: CircleAvatar(),
-                title: Text('유저 닉네임'),
+                title: Text(post.author),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
                   margin: EdgeInsets.fromLTRB(20, 10, 0, 10),
                   child: Text(
-                    "게시물 제목",
+                    post.postTitle,
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
@@ -51,7 +50,7 @@ class PostCard extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.fromLTRB(25, 10, 0, 0),
                   child: Text(
-                    "게시물 내용입니다.",
+                    post.content,
                   ),
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../model/post.dart';
 import '../widget/add_post_button.dart';
 import '../widget/post_card.dart';
 
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('피드'),
       ),
       body: StreamBuilder(
-        stream: firestore.collection('post').snapshots(),
+        stream: firestore.collection('posts').snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -33,11 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           final docs = snapshot.data!.docs;
           return ListView.builder(
-              itemCount: 3,
+              itemCount: docs.length,
               itemBuilder: (context, index) => GestureDetector(
                     child: PostCard(
-                        //post: Post.fromSnap(docs[index]),
-                        ),
+                      post: Post.fromSnap(docs[index]),
+                    ),
                     onTap: (() {
                       Navigator.push(
                           context,
