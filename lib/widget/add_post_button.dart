@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screen/post_screen.dart';
 
@@ -15,7 +16,9 @@ class _AddPostButtonState extends State<AddPostButton> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PostScreen()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  PostScreen(uid: FirebaseAuth.instance.currentUser!.uid)),
         );
       },
       child: Container(

@@ -4,14 +4,17 @@ import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../model/user.dart' as model;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:amigos_hackalearn/model/post.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../widget/upload_image.dart';
 
 class PostScreen extends StatefulWidget {
-  const PostScreen({Key? key}) : super(key: key);
+  final String uid;
+  const PostScreen({Key? key, required this.uid}) : super(key: key);
 
   @override
   State<PostScreen> createState() => _PostScreenState();
@@ -22,6 +25,38 @@ class _PostScreenState extends State<PostScreen> {
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   Uint8List? _image;
+  bool isLoading = false;
+  late final model.User user;
+  void setUser() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      DocumentSnapshot userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .get();
+      user = model.User.fromSnap(userSnap);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,11 +132,15 @@ class _PostScreenState extends State<PostScreen> {
               onTap: () {
                 final int _saved = int.parse(_priceController.text);
                 DateTime now = DateTime.now();
-                print(_saved);
-                //uid 정보 구현전이기때문에 주석처리
-                // Post postModel = Post(postTitle:_postTitlecontroller.text ,
-                // dateTime: now,  content: _contentController.text, photoUrl: _image)
-                //author: , profileImg: ,)
+                //user정보 확인
+                print(user.username);
+                // Post postModel = Post(
+                //     postTitle: _postTitlecontroller.text,
+                //     dateTime: now,
+                //     content: _contentController.text,
+                //     photoUrl: _image,
+                //     author: user.username,
+                //     profileImg: user.photoUrl);
               }),
         ],
       ),
