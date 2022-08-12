@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Post {
   final String id;
   final String postTitle;
-  //final DateTime dateTime;
+  final DateTime dateTime;
   final String photoUrl;
   final String profileImg;
   final String author; // uid
@@ -13,7 +13,7 @@ class Post {
   Post(
       {this.id = '',
       required this.postTitle,
-      //required this.dateTime,
+      required this.dateTime,
       required this.photoUrl,
       required this.profileImg,
       required this.author,
@@ -24,7 +24,7 @@ class Post {
     Map<String, dynamic> map,
   )   : id = map['id'],
         postTitle = map['postTitle'],
-        //dateTime = DateTime.parse(map['dateTime'].toString()),
+        dateTime = DateTime.parse(map['dateTime'].toString()),
         photoUrl = map['photoUrl'],
         profileImg = map['profileImg'],
         author = map['author'],
@@ -37,7 +37,7 @@ class Post {
     return Post(
       id: snapshot["id"],
       postTitle: snapshot["postTitle"],
-      //dateTime: snapshot["datetime"].toDate(),
+      dateTime: snapshot["dateTime"].toDate(),
       photoUrl: snapshot["photoUrl"],
       profileImg: snapshot['profileImg'],
       author: snapshot['author'],
@@ -49,7 +49,7 @@ class Post {
   Post fromJson(Map<String, dynamic> json) => Post(
       id: json['id'],
       postTitle: json['postTitle'],
-      //dateTime: json['dateTime'],
+      dateTime: json['dateTime'].toDate(),
       photoUrl: json['photoUrl'],
       profileImg: json['profileImg'],
       author: json['author'],
@@ -59,7 +59,7 @@ class Post {
   Map<String, dynamic> toJson() => {
         "id": id,
         "postTitle": postTitle,
-        //"dateTime": dateTime,
+        "dateTime": dateTime,
         "photoUrl": photoUrl,
         "profileImg": profileImg,
         "author": author,
