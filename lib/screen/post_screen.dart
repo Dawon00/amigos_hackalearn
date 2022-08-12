@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:amigos_hackalearn/model/post.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart';
 
 import '../widget/upload_image.dart';
 
@@ -25,11 +26,11 @@ class _PostScreenState extends State<PostScreen> {
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   Uint8List? _image;
-  bool isLoading = false;
+  var _isLoading = false;
   late final model.User user;
   void setUser() async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
 
     try {
@@ -45,9 +46,8 @@ class _PostScreenState extends State<PostScreen> {
         ),
       );
     }
-
     setState(() {
-      isLoading = false;
+      _isLoading = false;
     });
   }
 
@@ -55,6 +55,34 @@ class _PostScreenState extends State<PostScreen> {
   void initState() {
     super.initState();
     setUser();
+  }
+
+  Future<void> _sendPost(Post post) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      firestore.collection('posts').doc().set(post.toJson());
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('An error ocurred.'),
+          content: Text('오류가 발생했습니다.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('확인'),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override
@@ -131,16 +159,18 @@ class _PostScreenState extends State<PostScreen> {
               ),
               onTap: () {
                 final int _saved = int.parse(_priceController.text);
-                DateTime now = DateTime.now();
+                final dateTime = DateTime.now();
                 //user정보 확인
                 print(user.username);
-                // Post postModel = Post(
-                //     postTitle: _postTitlecontroller.text,
-                //     dateTime: now,
-                //     content: _contentController.text,
-                //     photoUrl: _image,
-                //     author: user.username,
-                //     profileImg: user.photoUrl);
+                Post postModel = Post(
+                    postTitle: _postTitlecontroller.text,
+                    dateTime: dateTime,
+                    content: _contentController.text,
+                    photoUrl: _image.toString(),
+                    author: user.username,
+                    saved: _saved,
+                    profileImg: user.photoUrl);
+                _sendPost(postModel);
               }),
         ],
       ),
