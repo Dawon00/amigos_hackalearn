@@ -39,16 +39,8 @@ class PostCard extends StatelessWidget {
               SizedBox(
                 height: 14,
               ),
-              Center(
-                child: Container(
-                  height: 350,
-                  width: 350,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10.0)),
-                ),
-              ),
+              //게시물 사진
+              //Center(child: Image.network(post.profileImg)),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
