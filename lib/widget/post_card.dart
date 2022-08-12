@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../model/post.dart';
 
@@ -8,6 +9,9 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime createddate = post.dateTime;
+    String formatteddate = DateFormat('yyyy-MM-dd kk:mm').format(createddate);
+
     return Column(
       children: <Widget>[
         Card(
@@ -61,7 +65,7 @@ class PostCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    child: Text(post.dateTime.toString()),
+                    child: Text(formatteddate),
                     margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                   ),
                   Container(
