@@ -38,7 +38,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   Container(
                     child: Text('Image'),
                   ),
-                  //Center(child: Image.network(post.profileImg)),
+                  //Center(child: Image.network(widget.post.photoUrl)),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
