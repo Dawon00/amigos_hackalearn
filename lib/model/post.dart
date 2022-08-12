@@ -6,7 +6,8 @@ class Post {
   final DateTime dateTime;
   final String photoUrl;
   final String profileImg;
-  final String author; // uid
+  final String author; // username
+  final String uid; // author's uid
   final String content;
   final int saved;
 
@@ -17,6 +18,7 @@ class Post {
       required this.photoUrl,
       required this.profileImg,
       required this.author,
+      required this.uid,
       required this.content,
       required this.saved});
 
@@ -28,6 +30,7 @@ class Post {
         photoUrl = map['photoUrl'],
         profileImg = map['profileImg'],
         author = map['author'],
+        uid = map['uid'],
         content = map['content'],
         saved = map['saved'];
 
@@ -41,6 +44,7 @@ class Post {
       photoUrl: snapshot["photoUrl"],
       profileImg: snapshot['profileImg'],
       author: snapshot['author'],
+      uid: snapshot['uid'],
       content: snapshot["content"],
       saved: snapshot["saved"],
     );
@@ -53,6 +57,7 @@ class Post {
       photoUrl: json['photoUrl'],
       profileImg: json['profileImg'],
       author: json['author'],
+      uid: json['uid'],
       content: json['content'],
       saved: json['saved']);
 
@@ -63,6 +68,7 @@ class Post {
         "photoUrl": photoUrl,
         "profileImg": profileImg,
         "author": author,
+        "uid": uid,
         "content": content,
         "saved": saved,
       };
