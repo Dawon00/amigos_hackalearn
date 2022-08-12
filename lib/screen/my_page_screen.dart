@@ -14,7 +14,7 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  late final model.User user;
+  late model.User user;
   bool isLoading = false;
 
   void setUser() async {
@@ -28,7 +28,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
           .doc(widget.uid)
           .get();
       user = model.User.fromSnap(userSnap);
-      print(user.photoUrl);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -105,14 +104,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (!mounted) return;
-                                        Navigator.of(context).push(
+                                        await Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ProfileEditScreen(user: user),
                                           ),
                                         );
+
+                                        setUser();
                                       },
                                       child: const Text('프로필 편집'),
                                     ),
