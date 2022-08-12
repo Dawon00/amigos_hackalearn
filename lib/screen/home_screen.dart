@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/post.dart';
 import '../widget/add_post_button.dart';
 import '../widget/post_card.dart';
+import 'detail_screen.dart';
 
 final firestore = FirebaseFirestore.instance;
 
@@ -43,10 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           CupertinoPageRoute(
-                              builder: (context) => Scaffold(
-                                    body: Text('상세 페이지'),
-                                    //DetailScreen 으로 전환
-                                  )));
+                              builder: (context) => DetailScreen(
+                                  post: Post.fromSnap(docs[index]),
+                                  uid:
+                                      FirebaseAuth.instance.currentUser!.uid)));
                     }),
                   ));
         },

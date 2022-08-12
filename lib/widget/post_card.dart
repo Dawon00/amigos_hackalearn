@@ -53,24 +53,13 @@ class PostCard extends StatelessWidget {
               SizedBox(
                 height: 14,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: Text(formatteddate),
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(Icons.mode_comment_outlined),
-                        Text('  3')
-                      ],
-                    ),
-                  ),
-                ],
+
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [Text(formatteddate)],
+                ),
               ),
             ]),
           ),
