@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,12 +58,37 @@ class _PostScreenState extends State<PostScreen> {
     setUser();
   }
 
-  Future<void> _sendPost(Post post) async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
+  Future<void> _sendPost(
+      {required String postTitle,
+      required DateTime dateTime,
+      required String content,
+      required Uint8List file,
+      required String author,
+      required String uid,
+      required int saved,
+      required String profileImg}) async {
+    late String res;
     try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref().child('postImages').child('1');
+      UploadTask uploadTask = ref.putData(file);
+      TaskSnapshot snapshot = await uploadTask;
+      String photoUrl = await snapshot.ref.getDownloadURL();
+      Post post = Post(
+          id: '1',
+          author: author,
+          postTitle: postTitle,
+          dateTime: dateTime,
+          content: content,
+          photoUrl: photoUrl,
+          uid: user.uid,
+          saved: saved,
+          profileImg: profileImg);
       firestore.collection('posts').doc().set(post.toJson());
-    } catch (error) {
+      res = "success";
+    } catch (e) {
+      res = e.toString();
       await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -78,6 +105,7 @@ class _PostScreenState extends State<PostScreen> {
         ),
       );
     }
+
     setState(() {
       _isLoading = false;
     });
@@ -159,18 +187,19 @@ class _PostScreenState extends State<PostScreen> {
               onTap: () {
                 final int _saved = int.parse(_priceController.text);
                 final dateTime = DateTime.now();
+                final FirebaseStorage storage = FirebaseStorage.instance;
                 //user정보 확인
                 print(user.username);
-                Post postModel = Post(
+
+                _sendPost(
                     postTitle: _postTitlecontroller.text,
                     dateTime: dateTime,
                     content: _contentController.text,
-                    photoUrl: _image.toString(),
+                    file: _image!,
                     author: user.username,
                     uid: user.uid,
                     saved: _saved,
                     profileImg: user.photoUrl);
-                _sendPost(postModel);
               }),
         ],
       ),
