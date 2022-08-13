@@ -1,3 +1,5 @@
+import 'package:amigos_hackalearn/screen/post_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -18,9 +20,68 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     DateTime createddate = widget.post.dateTime;
     String formatteddate = DateFormat('yyyy-MM-dd kk:mm').format(createddate);
-
+    final currentUid = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
-        appBar: AppBar(title: Text(widget.post.postTitle)),
+        appBar: AppBar(
+          title: Text(widget.post.postTitle),
+          actions: currentUid == widget.post.uid
+              ? <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      //수정상태와 최초 글쓰기 상태를 PostScreen에서 설정해줘야
+                      // Navigator.of(context).pushNamed(PostScreen(uid: widget.post.uid)
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text('게시글 삭제'),
+                          content: Text('게시글을 삭제할까요?'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                '취소',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              onPressed: () {
+                                Navigator.of(ctx).pop(false);
+                              },
+                            ),
+                            FlatButton(
+                              child: Text(
+                                '확인',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              onPressed: () async {
+                                Navigator.of(ctx).pop(true);
+                                try {
+                                  Navigator.pop(context);
+                                  //delete 함수 호출
+                                } catch (error) {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                      "삭제하지 못했습니다.",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ));
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ]
+              : null,
+        ),
         body: Column(
           children: <Widget>[
             Card(
@@ -38,7 +99,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   Container(
                     child: Text('Image'),
                   ),
-                  //Center(child: Image.network(widget.post.photoUrl)),
+                  Center(child: Image.network(widget.post.photoUrl)),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(

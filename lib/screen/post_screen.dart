@@ -113,7 +113,12 @@ class _PostScreenState extends State<PostScreen> {
     });
     Navigator.of(context).pop();
   }
+  // Future<void> _delPost(){
 
+  // }
+  // Future<void> _editPost(){
+  //
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
