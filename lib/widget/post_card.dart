@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../model/post.dart';
 
@@ -8,6 +9,9 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime createddate = post.dateTime;
+    String formatteddate = DateFormat('yyyy-MM-dd kk:mm').format(createddate);
+
     return Column(
       children: <Widget>[
         Card(
@@ -35,16 +39,8 @@ class PostCard extends StatelessWidget {
               SizedBox(
                 height: 14,
               ),
-              Center(
-                child: Container(
-                  height: 350,
-                  width: 350,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(10.0)),
-                ),
-              ),
+              //게시물 사진
+              //Center(child: Image.network(post.profileImg)),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
@@ -57,24 +53,13 @@ class PostCard extends StatelessWidget {
               SizedBox(
                 height: 14,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: Text(post.dateTime.toString()),
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(Icons.mode_comment_outlined),
-                        Text('  3')
-                      ],
-                    ),
-                  ),
-                ],
+
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [Text(formatteddate)],
+                ),
               ),
             ]),
           ),

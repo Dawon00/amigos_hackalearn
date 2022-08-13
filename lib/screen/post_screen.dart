@@ -168,6 +168,7 @@ class _PostScreenState extends State<PostScreen> {
                     content: _contentController.text,
                     photoUrl: _image.toString(),
                     author: user.username,
+                    uid: user.uid,
                     saved: _saved,
                     profileImg: user.photoUrl);
                 _sendPost(postModel);
