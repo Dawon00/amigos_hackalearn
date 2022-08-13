@@ -1,8 +1,8 @@
 import 'package:amigos_hackalearn/screen/post_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../model/post.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -63,7 +63,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                 Navigator.of(ctx).pop(true);
                                 try {
                                   Navigator.pop(context);
-                                  //delete 함수 호출
+                                  final FirebaseFirestore firestore =
+                                      FirebaseFirestore.instance;
+                                  firestore
+                                      .collection('posts')
+                                      .doc(widget.post.id)
+                                      .delete();
                                 } catch (error) {
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text(
