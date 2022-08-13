@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart';
 import '../widget/input_field.dart';
+import 'package:uuid/uuid.dart';
 
 class PostScreen extends StatefulWidget {
   final String uid;
@@ -27,6 +28,7 @@ class _PostScreenState extends State<PostScreen> {
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   Uint8List? _image;
+  String postId = Uuid().v4();
   var _isLoading = false;
   late final model.User user;
   void setUser() async {
@@ -71,12 +73,12 @@ class _PostScreenState extends State<PostScreen> {
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final FirebaseStorage storage = FirebaseStorage.instance;
-      Reference ref = storage.ref().child('postImages').child('1');
+      Reference ref = storage.ref().child('postImages').child(postId);
       UploadTask uploadTask = ref.putData(file);
       TaskSnapshot snapshot = await uploadTask;
       String photoUrl = await snapshot.ref.getDownloadURL();
       Post post = Post(
-          id: '1',
+          id: postId,
           author: author,
           postTitle: postTitle,
           dateTime: dateTime,
@@ -85,7 +87,7 @@ class _PostScreenState extends State<PostScreen> {
           uid: user.uid,
           saved: saved,
           profileImg: profileImg);
-      firestore.collection('posts').doc().set(post.toJson());
+      firestore.collection('posts').doc(postId).set(post.toJson());
       res = "success";
     } catch (e) {
       res = e.toString();
