@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:amigos_hackalearn/widget/input_field.dart';
+import '../utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +10,7 @@ import 'package:amigos_hackalearn/model/post.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart';
-
-import '../widget/upload_image.dart';
+import '../widget/input_field.dart';
 
 class PostScreen extends StatefulWidget {
   final String uid;
