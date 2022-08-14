@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:amigos_hackalearn/screen/post_screen.dart';
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +25,18 @@ class _DetailScreenState extends State<DetailScreen> {
     String formatteddate = DateFormat('yyyy-MM-dd').format(createddate);
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: primaryColor,
         appBar: AppBar(
-          title: Text(widget.post.postTitle),
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: primaryColor),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          backgroundColor: whiteColor,
+          title: Text(
+            widget.post.postTitle,
+            style: TextStyle(color: primaryColor),
+          ),
           actions: currentUid == widget.post.uid
               ? <Widget>[
                   IconButton(
@@ -91,61 +104,77 @@ class _DetailScreenState extends State<DetailScreen> {
                 ]
               : null,
         ),
-        body: Column(
-          children: <Widget>[
-            Card(
-              shape: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              margin: const EdgeInsets.all(30),
-              child: Container(
-                margin: EdgeInsets.all(20),
-                child: Column(children: <Widget>[
-                  //프로필 사진 & author
-                  ListTile(
-                    leading: CircleAvatar(),
-                    title: Text(widget.post.author),
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  //게시물 사진
-                  Center(child: Image.network(widget.post.photoUrl)),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(25, 10, 0, 0),
-                      child: Text(
-                        widget.post.content,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Card(
+                color: whiteColor,
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                margin: const EdgeInsets.all(30),
+                child: Container(
+                  margin: EdgeInsets.all(20),
+                  child: Column(children: <Widget>[
+                    //프로필 사진 & author
+                    ListTile(
+                      leading: CircleAvatar(),
+                      title: Text(
+                        widget.post.author,
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  //발행 날짜
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Spacer(
-                          flex: 20,
-                        ),
-                        Text(formatteddate),
-                        Spacer(
-                          flex: 4,
-                        ),
-                        Text(widget.post.saved.toString()),
-                        Spacer(),
-                        Text('원 절약')
-                      ],
+                    SizedBox(
+                      height: 14,
                     ),
-                  ),
-                ]),
-              ),
-            )
-          ],
+                    //게시물 사진
+                    Center(child: Image.network(widget.post.photoUrl)),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(25, 10, 0, 0),
+                        child: Text(
+                          widget.post.content,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    //발행 날짜
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Spacer(
+                            flex: 20,
+                          ),
+                          Text(
+                            formatteddate,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Spacer(
+                            flex: 4,
+                          ),
+                          Text(
+                            widget.post.saved.toString(),
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          Spacer(),
+                          Text(
+                            '원 절약',
+                            style: TextStyle(color: Colors.black),
+                          )
+                        ],
+                      ),
+                    ),
+                  ]),
+                ),
+              )
+            ],
+          ),
         ));
   }
 }
