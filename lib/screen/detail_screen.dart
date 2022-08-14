@@ -19,7 +19,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     DateTime createddate = widget.post.dateTime;
-    String formatteddate = DateFormat('yyyy-MM-dd kk:mm').format(createddate);
+    String formatteddate = DateFormat('yyyy-MM-dd').format(createddate);
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
         appBar: AppBar(
@@ -31,7 +31,11 @@ class _DetailScreenState extends State<DetailScreen> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       //수정상태와 최초 글쓰기 상태를 PostScreen에서 설정해줘야
-                      // Navigator.of(context).pushNamed(PostScreen(uid: widget.post.uid)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PostScreen(uid: widget.post.uid)));
                     },
                   ),
                   IconButton(
@@ -97,13 +101,15 @@ class _DetailScreenState extends State<DetailScreen> {
               child: Container(
                 margin: EdgeInsets.all(20),
                 child: Column(children: <Widget>[
+                  //프로필 사진 & author
+                  ListTile(
+                    leading: CircleAvatar(),
+                    title: Text(widget.post.author),
+                  ),
                   SizedBox(
                     height: 14,
                   ),
                   //게시물 사진
-                  Container(
-                    child: Text('Image'),
-                  ),
                   Center(child: Image.network(widget.post.photoUrl)),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -122,13 +128,19 @@ class _DetailScreenState extends State<DetailScreen> {
                     margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [Text(formatteddate)],
+                      children: [
+                        Spacer(
+                          flex: 20,
+                        ),
+                        Text(formatteddate),
+                        Spacer(
+                          flex: 4,
+                        ),
+                        Text(widget.post.saved.toString()),
+                        Spacer(),
+                        Text('원 절약')
+                      ],
                     ),
-                  ),
-                  //프로필 사진 & author
-                  ListTile(
-                    leading: CircleAvatar(),
-                    title: Text(widget.post.author),
                   ),
                 ]),
               ),
