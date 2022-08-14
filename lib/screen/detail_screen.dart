@@ -31,7 +31,11 @@ class _DetailScreenState extends State<DetailScreen> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       //수정상태와 최초 글쓰기 상태를 PostScreen에서 설정해줘야
-                      // Navigator.of(context).pushNamed(PostScreen(uid: widget.post.uid)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PostScreen(uid: widget.post.uid)));
                     },
                   ),
                   IconButton(
@@ -97,13 +101,15 @@ class _DetailScreenState extends State<DetailScreen> {
               child: Container(
                 margin: EdgeInsets.all(20),
                 child: Column(children: <Widget>[
+                  //프로필 사진 & author
+                  ListTile(
+                    leading: CircleAvatar(),
+                    title: Text(widget.post.author),
+                  ),
                   SizedBox(
                     height: 14,
                   ),
                   //게시물 사진
-                  Container(
-                    child: Text('Image'),
-                  ),
                   Center(child: Image.network(widget.post.photoUrl)),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -124,11 +130,6 @@ class _DetailScreenState extends State<DetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [Text(formatteddate)],
                     ),
-                  ),
-                  //프로필 사진 & author
-                  ListTile(
-                    leading: CircleAvatar(),
-                    title: Text(widget.post.author),
                   ),
                 ]),
               ),
