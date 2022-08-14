@@ -17,6 +17,7 @@ import 'package:uuid/uuid.dart';
 
 class PostScreen extends StatefulWidget {
   final String uid;
+
   const PostScreen({Key? key, required this.uid}) : super(key: key);
 
   @override
@@ -114,6 +115,9 @@ class _PostScreenState extends State<PostScreen> {
     Navigator.of(context).pop();
   }
 
+  // Future<void> _editPost(){
+  //
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,10 +193,8 @@ class _PostScreenState extends State<PostScreen> {
               onTap: () {
                 final int _saved = int.parse(_priceController.text);
                 final dateTime = DateTime.now();
-                final FirebaseStorage storage = FirebaseStorage.instance;
                 //user정보 확인
                 print(user.username);
-
                 _sendPost(
                     postTitle: _postTitlecontroller.text,
                     dateTime: dateTime,
