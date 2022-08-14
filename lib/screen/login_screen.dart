@@ -1,5 +1,6 @@
 import 'package:amigos_hackalearn/screen/index_screen.dart';
 import 'package:amigos_hackalearn/screen/signup_screen.dart';
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // 메인 로고 이미지
               Image.asset(
-                'assets/light_logo.png',
+                'assets/dark_logo.png',
                 height: 120,
               ),
               const SizedBox(
@@ -103,18 +104,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         Radius.circular(4),
                       ),
                     ),
-                    color: Color.fromRGBO(0, 149, 246, 1),
+                    color: primaryColor,
                   ),
                   child: _isLoading
                       ? const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.white,
+                            color: whiteColor,
                           ),
                         )
                       : const Text(
                           'Log in',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: whiteColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

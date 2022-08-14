@@ -1,6 +1,9 @@
+import 'package:amigos_hackalearn/model/post.dart';
 import 'package:amigos_hackalearn/model/user.dart' as model;
+import 'package:amigos_hackalearn/screen/detail_screen.dart';
 import 'package:amigos_hackalearn/screen/login_screen.dart';
 import 'package:amigos_hackalearn/screen/profile_edit_screen.dart';
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +59,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         : Scaffold(
             appBar: AppBar(
               title: Text(user.username),
+              backgroundColor: backgroundColor1,
               centerTitle: false,
             ),
             body: ListView(
@@ -68,6 +72,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(user.photoUrl),
+                            backgroundColor: secondaryColor,
                             radius: 40,
                           ),
                           Expanded(
@@ -115,7 +120,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
                                         setUser();
                                       },
-                                      child: const Text('프로필 편집'),
+                                      child: const Text(
+                                        '프로필 편집',
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                        ),
+                                      ),
                                     ),
                                     TextButton(
                                       onPressed: () async {
@@ -130,7 +140,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                           ),
                                         );
                                       },
-                                      child: const Text('로그아웃'),
+                                      child: const Text(
+                                        '로그아웃',
+                                        style: TextStyle(
+                                          color: primaryColor,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -170,23 +185,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
                         return InkWell(
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => Scaffold(
-                                        appBar: AppBar(
-                                          title: Text('상세페이지 제목'),
-                                          centerTitle: false,
-                                        ),
-                                        body: Text('상세 페이지 컨텐츠'),
-                                      )),
-                            );
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => DetailScreen(
+                                    post: Post.fromSnap(snap),
+                                    uid: widget.uid)));
                           },
-                          child: Container(
-                            child: Image(
-                              image: NetworkImage(
-                                  (snap.data()! as dynamic)['photoUrl']),
-                              fit: BoxFit.cover,
-                            ),
+                          child: Image(
+                            image: NetworkImage(
+                                (snap.data()! as dynamic)['photoUrl']),
+                            fit: BoxFit.cover,
                           ),
                         );
                       },

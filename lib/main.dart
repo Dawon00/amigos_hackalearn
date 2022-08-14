@@ -1,5 +1,6 @@
 import 'package:amigos_hackalearn/screen/index_screen.dart';
 import 'package:amigos_hackalearn/screen/login_screen.dart';
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Amigos',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: backgroundColor1,
+      ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -47,7 +51,9 @@ class MyApp extends StatelessWidget {
             }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
             );
           }
           return const LoginScreen();

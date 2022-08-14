@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:amigos_hackalearn/model/user.dart' as model;
 import 'package:amigos_hackalearn/screen/index_screen.dart';
 import 'package:amigos_hackalearn/screen/login_screen.dart';
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,15 +42,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Container(),
               ),
 
-              // 메인 로고 이미지
-              Image.asset(
-                'assets/light_logo.png',
-                height: 120,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-
               // 프로필 이미지 선택 기능
               Stack(
                 children: [
@@ -61,7 +53,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         )
                       : const CircleAvatar(
                           radius: 64,
-                          backgroundImage: AssetImage('assets/dark_logo.png'),
+                          backgroundImage:
+                              AssetImage('assets/default_profile.jpg'),
                         ),
                   Positioned(
                     bottom: -10,
@@ -152,18 +145,18 @@ class _SignupScreenState extends State<SignupScreen> {
                         Radius.circular(4),
                       ),
                     ),
-                    color: Color.fromRGBO(0, 149, 246, 1),
+                    color: primaryColor,
                   ),
                   child: _isLoading
                       ? const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.white,
+                            color: whiteColor,
                           ),
                         )
                       : const Text(
                           'Sign up',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: whiteColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:amigos_hackalearn/model/user.dart' as model;
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:amigos_hackalearn/widget/input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -27,6 +28,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('프로필 편집'),
+        backgroundColor: backgroundColor1,
         actions: [
           TextButton(
             onPressed: () async {
@@ -107,10 +109,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   _image != null
                       ? CircleAvatar(
                           radius: 64,
+                          backgroundColor: secondaryColor,
                           backgroundImage: MemoryImage(_image!),
                         )
                       : CircleAvatar(
                           radius: 64,
+                          backgroundColor: secondaryColor,
                           backgroundImage: NetworkImage(widget.user.photoUrl),
                         ),
                   Positioned(
