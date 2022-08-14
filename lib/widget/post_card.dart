@@ -45,7 +45,7 @@ class PostCard extends StatelessWidget {
                 height: 14,
               ),
               //게시물 사진
-              Center(child: Image.network(post.profileImg)),
+              Center(child: Image.network(post.photoUrl)),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(

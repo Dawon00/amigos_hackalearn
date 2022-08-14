@@ -41,6 +41,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ? <Widget>[
                   IconButton(
                     icon: const Icon(Icons.edit),
+                    color: primaryColor,
                     onPressed: () {
                       Navigator.of(context).pop();
                       //수정상태와 최초 글쓰기 상태를 PostScreen에서 설정해줘야
@@ -53,6 +54,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete),
+                    color: primaryColor,
                     onPressed: () async {
                       showDialog(
                         context: context,
