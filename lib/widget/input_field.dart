@@ -1,3 +1,4 @@
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
@@ -18,11 +19,14 @@ class InputField extends StatelessWidget {
     return TextField(
       controller: textEditingController,
       decoration: InputDecoration(
-        labelText: hintText,
-        labelStyle: const TextStyle(color: Colors.white),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
+        filled: true,
+        fillColor: whiteColor,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+          //borderRadius: BorderRadius.circular(50)
         ),
+        labelText: hintText,
+        labelStyle: const TextStyle(color: primaryColor),
       ),
       style: const TextStyle(color: Colors.black),
       keyboardType: inputType,

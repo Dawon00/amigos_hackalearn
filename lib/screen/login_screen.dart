@@ -34,13 +34,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(),
               ),
 
-              // 메인 로고 이미지
-              Image.asset(
-                'assets/dark_logo.png',
-                height: 120,
+              // // 메인 로고 이미지
+              // Image.asset(
+              //   'assets/dark_logo.png',
+              //   height: 120,
+              // ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Login to your Account',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 30,
+                  ),
+                ),
               ),
               const SizedBox(
-                height: 16,
+                height: 50,
               ),
 
               // 이메일 입력 필드
@@ -49,7 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'Email',
                 inputType: TextInputType.emailAddress,
               ),
-
+              const SizedBox(
+                height: 10,
+              ),
               // 비밀번호 입력 필드
               InputField(
                 textEditingController: _passwordController,
@@ -100,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
                     shape: RoundedRectangleBorder(
+                      side: BorderSide(color: whiteColor),
                       borderRadius: BorderRadius.all(
                         Radius.circular(4),
                       ),

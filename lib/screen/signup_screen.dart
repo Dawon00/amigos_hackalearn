@@ -41,7 +41,19 @@ class _SignupScreenState extends State<SignupScreen> {
                 flex: 2,
                 child: Container(),
               ),
-
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Create your Account',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
               // 프로필 이미지 선택 기능
               Stack(
                 children: [
@@ -53,8 +65,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         )
                       : const CircleAvatar(
                           radius: 64,
-                          backgroundImage:
-                              AssetImage('assets/default_profile.jpg'),
+                          backgroundImage: AssetImage('default.png'),
                         ),
                   Positioned(
                     bottom: -10,
@@ -73,20 +84,26 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ],
               ),
-
+              const SizedBox(
+                height: 20,
+              ),
               // 사용자 이름 입력 필드
               InputField(
                 textEditingController: _usernameController,
                 hintText: 'Username',
               ),
-
+              const SizedBox(
+                height: 10,
+              ),
               // 이메일 입력 필드
               InputField(
                 textEditingController: _emailController,
                 hintText: 'Email',
                 inputType: TextInputType.emailAddress,
               ),
-
+              const SizedBox(
+                height: 10,
+              ),
               // 비밀번호 입력 필드
               InputField(
                 textEditingController: _passwordController,
@@ -141,6 +158,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const ShapeDecoration(
                     shape: RoundedRectangleBorder(
+                      side: BorderSide(color: whiteColor),
                       borderRadius: BorderRadius.all(
                         Radius.circular(4),
                       ),
