@@ -19,7 +19,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     DateTime createddate = widget.post.dateTime;
-    String formatteddate = DateFormat('yyyy-MM-dd kk:mm').format(createddate);
+    String formatteddate = DateFormat('yyyy-MM-dd').format(createddate);
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
         appBar: AppBar(
@@ -128,7 +128,18 @@ class _DetailScreenState extends State<DetailScreen> {
                     margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [Text(formatteddate)],
+                      children: [
+                        Spacer(
+                          flex: 20,
+                        ),
+                        Text(formatteddate),
+                        Spacer(
+                          flex: 4,
+                        ),
+                        Text(widget.post.saved.toString()),
+                        Spacer(),
+                        Text('원 절약')
+                      ],
                     ),
                   ),
                 ]),
