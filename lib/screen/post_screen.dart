@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../utils/utils.dart';
@@ -122,7 +123,15 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('글쓰기'),
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back, color: primaryColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          '글쓰기',
+          style: TextStyle(color: primaryColor),
+        ),
+        backgroundColor: whiteColor,
       ),
       body: Column(
         children: [
@@ -136,7 +145,7 @@ class _PostScreenState extends State<PostScreen> {
                       height: 150,
                     )
                   : const Image(
-                      image: AssetImage('assets/dark_logo.png'),
+                      image: AssetImage('default_photo.png'),
                       width: 150,
                       height: 150,
                     ),
@@ -159,36 +168,67 @@ class _PostScreenState extends State<PostScreen> {
           Column(
             children: [
               Text('글 제목'),
-              InputField(
-                  textEditingController: _postTitlecontroller,
-                  hintText: "글 제목을 입력해주세요",
-                  inputType: TextInputType.text),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: InputField(
+                    textEditingController: _postTitlecontroller,
+                    hintText: "글 제목을 입력해주세요",
+                    inputType: TextInputType.text),
+              ),
             ],
           ),
+          Spacer(),
           //본문 입력
           Column(
             children: [
               Text('본문 내용'),
-              InputField(
-                  textEditingController: _contentController,
-                  hintText: "내용을 입력해주세요",
-                  inputType: TextInputType.text),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: InputField(
+                    textEditingController: _contentController,
+                    hintText: "내용을 입력해주세요",
+                    inputType: TextInputType.text),
+              ),
             ],
           ),
+          Spacer(),
 
           Column(
             children: [
               Text('아낀 금액'),
-              InputField(
-                  textEditingController: _priceController,
-                  hintText: "금액을 입력해주세요",
-                  inputType: TextInputType.number),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: InputField(
+                    textEditingController: _priceController,
+                    hintText: "금액을 입력해주세요",
+                    inputType: TextInputType.number),
+              ),
             ],
           ),
+          Spacer(),
+
           InkWell(
               child: Container(
-                padding: EdgeInsets.all(12.0),
-                child: Text('Flat Button'),
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  '완료',
+                  style: TextStyle(
+                    color: whiteColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                width: double.infinity,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: const ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: whiteColor),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4),
+                    ),
+                  ),
+                  color: primaryColor,
+                ),
               ),
               onTap: () {
                 final int _saved = int.parse(_priceController.text);
@@ -205,6 +245,9 @@ class _PostScreenState extends State<PostScreen> {
                     saved: _saved,
                     profileImg: user.photoUrl);
               }),
+          Spacer(
+            flex: 5,
+          ),
         ],
       ),
     );
