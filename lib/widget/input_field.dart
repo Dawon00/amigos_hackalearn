@@ -18,8 +18,13 @@ class InputField extends StatelessWidget {
     return TextField(
       controller: textEditingController,
       decoration: InputDecoration(
-        hintText: hintText,
+        labelText: hintText,
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
+        ),
       ),
+      style: const TextStyle(color: Colors.black),
       keyboardType: inputType,
       obscureText: isPassword,
     );
