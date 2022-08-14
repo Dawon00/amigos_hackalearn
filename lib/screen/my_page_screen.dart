@@ -57,9 +57,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
+            backgroundColor: whiteColor,
             appBar: AppBar(
-              title: Text(user.username),
-              backgroundColor: backgroundColor1,
+              title: Text(
+                '마이페이지',
+                style: TextStyle(color: primaryColor),
+              ),
+              backgroundColor: whiteColor,
               centerTitle: false,
             ),
             body: ListView(
@@ -78,23 +82,37 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           Expanded(
                             child: Column(
                               children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  padding: const EdgeInsets.all(8),
-                                  child: const Text(
-                                    '지금까지',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
+                                Row(
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        user.username,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Container(
+                                      alignment: Alignment.centerLeft,
+                                      padding: const EdgeInsets.all(8),
+                                      child: const Text(
+                                        '님이 지금까지',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Container(
                                   alignment: Alignment.centerRight,
                                   child: Text(
                                     '아낀 금액은 ${user.saved.toString()}원',
                                     textAlign: TextAlign.end,
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                 ),
                                 Container(
@@ -102,13 +120,29 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   child: Text(
                                     '총 ${user.implements.length.toString()}일 절약 실천중',
                                     textAlign: TextAlign.end,
+                                    style: TextStyle(color: Colors.black),
                                   ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
                                 ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
+                                    Spacer(
+                                      flex: 5,
+                                    ),
                                     TextButton(
+                                      style: ButtonStyle(
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                  side: BorderSide(
+                                                      color: primaryColor)))),
                                       onPressed: () async {
                                         if (!mounted) return;
                                         await Navigator.of(context).push(
@@ -127,7 +161,19 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                         ),
                                       ),
                                     ),
+                                    Spacer(
+                                      flex: 1,
+                                    ),
                                     TextButton(
+                                      style: ButtonStyle(
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                  side: BorderSide(
+                                                      color: primaryColor)))),
                                       onPressed: () async {
                                         FirebaseAuth auth =
                                             FirebaseAuth.instance;
@@ -146,6 +192,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                           color: primaryColor,
                                         ),
                                       ),
+                                    ),
+                                    Spacer(
+                                      flex: 1,
                                     ),
                                   ],
                                 ),

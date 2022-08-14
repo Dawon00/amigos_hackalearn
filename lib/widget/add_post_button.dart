@@ -1,3 +1,4 @@
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screen/post_screen.dart';
@@ -13,6 +14,8 @@ class _AddPostButtonState extends State<AddPostButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: Colors.amber,
+      foregroundColor: primaryColor,
       onPressed: () {
         Navigator.push(
           context,

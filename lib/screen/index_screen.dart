@@ -1,3 +1,4 @@
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,13 @@ class _IndexScreenState extends State<IndexScreen> {
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
       const BottomNavigationBarItem(
-          icon: Icon(Icons.view_day_rounded), label: '피드'),
+          icon: Icon(Icons.view_day_rounded),
+          label: '피드',
+          backgroundColor: whiteColor),
       const BottomNavigationBarItem(
-          icon: Icon(Icons.child_care_rounded), label: '마이 페이지')
+          icon: Icon(Icons.child_care_rounded),
+          label: '마이 페이지',
+          backgroundColor: whiteColor)
     ];
   }
 
@@ -64,9 +69,10 @@ class _IndexScreenState extends State<IndexScreen> {
     return Scaffold(
       body: buildPageView(),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
         elevation: 0.0,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.blueAccent[700],
+        backgroundColor: whiteColor,
+        selectedItemColor: primaryColor,
         unselectedItemColor: const Color.fromARGB(255, 131, 144, 167),
         showSelectedLabels: false,
         showUnselectedLabels: false,

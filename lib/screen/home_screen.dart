@@ -1,3 +1,4 @@
+import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('피드'),
+        backgroundColor: whiteColor,
+        title: Text(
+          '피드',
+          style: TextStyle(color: primaryColor),
+        ),
       ),
       body: StreamBuilder(
         stream: firestore.collection('posts').snapshots(),
