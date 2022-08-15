@@ -84,6 +84,22 @@ class _DetailScreenState extends State<DetailScreen> {
                                   Navigator.pop(context);
                                   final FirebaseFirestore firestore =
                                       FirebaseFirestore.instance;
+                                  DateTime day = widget.post.dateTime;
+                                  String tmpDate = day.year.toString() +
+                                      day.month.toString() +
+                                      day.day.toString();
+
+                                  DocumentReference docUser = FirebaseFirestore
+                                      .instance
+                                      .collection('users')
+                                      .doc(widget.post.uid);
+
+                                  docUser.update({
+                                    "saved": FieldValue.increment(
+                                        widget.post.saved * (-1)),
+                                    "implements":
+                                        FieldValue.arrayRemove([tmpDate])
+                                  });
                                   firestore
                                       .collection('posts')
                                       .doc(widget.post.id)

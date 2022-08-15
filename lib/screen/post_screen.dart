@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -244,10 +245,18 @@ class _PostScreenState extends State<PostScreen> {
                     uid: user.uid,
                     saved: _saved,
                     profileImg: user.photoUrl);
+                String tmpDate = dateTime.year.toString() +
+                    dateTime.month.toString() +
+                    dateTime.day.toString();
+
                 DocumentReference doc = FirebaseFirestore.instance
                     .collection('users')
                     .doc(user.uid);
-                doc.update({"saved": user.saved + _saved});
+                doc.update({
+                  "saved": user.saved + _saved,
+                  "implements": FieldValue.arrayUnion(['220816'])
+                });
+                print(user.implements);
               }),
           Spacer(
             flex: 5,
