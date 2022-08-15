@@ -146,7 +146,7 @@ class _PostScreenState extends State<PostScreen> {
                       height: 150,
                     )
                   : const Image(
-                      image: AssetImage('default_photo.png'),
+                      image: AssetImage('assets/default_photo.png'),
                       width: 150,
                       height: 150,
                     ),
