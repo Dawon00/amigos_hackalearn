@@ -30,7 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: StreamBuilder(
-        stream: firestore.collection('posts').snapshots(),
+        stream: firestore
+            .collection('posts')
+            .orderBy(
+              'dateTime',
+              descending: true,
+            )
+            .snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
