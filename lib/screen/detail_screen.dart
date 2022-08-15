@@ -60,6 +60,17 @@ class _DetailScreenState extends State<DetailScreen> {
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     final TextEditingController commentController = TextEditingController();
 
+    countComments() async {
+      final QuerySnapshot qSnap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.post.id)
+          .collection('comments')
+          .get();
+
+      final String documentlen = qSnap.docs.length.toString();
+      return documentlen;
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryColor,
@@ -226,6 +237,24 @@ class _DetailScreenState extends State<DetailScreen> {
                   ],
                 ),
               ),
+            ),
+            FutureBuilder<String>(
+              future: countComments(),
+              builder: ((context, snapshot) {
+                if (!snapshot.hasData) {
+                  // while data is loading:
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  final len = snapshot.data;
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(20, 10, 0, 10),
+                    alignment: Alignment.centerLeft,
+                    child: Container(child: Text('댓글 ' + len! + ' 개')),
+                  );
+                }
+              }),
             ),
             StreamBuilder(
               stream: FirebaseFirestore.instance
