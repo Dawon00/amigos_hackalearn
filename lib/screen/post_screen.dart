@@ -244,6 +244,10 @@ class _PostScreenState extends State<PostScreen> {
                     uid: user.uid,
                     saved: _saved,
                     profileImg: user.photoUrl);
+                DocumentReference doc = FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(user.uid);
+                doc.update({"saved": user.saved + _saved});
               }),
           Spacer(
             flex: 5,
