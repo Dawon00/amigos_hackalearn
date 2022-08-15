@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widget/add_post_button.dart';
+
 class MyPageScreen extends StatefulWidget {
   final String uid;
   const MyPageScreen({Key? key, required this.uid}) : super(key: key);
@@ -249,6 +251,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 )
               ],
             ),
+            floatingActionButton: const AddPostButton(),
           );
   }
 }
