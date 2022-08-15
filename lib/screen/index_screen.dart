@@ -69,7 +69,6 @@ class _IndexScreenState extends State<IndexScreen> {
     return Scaffold(
       body: buildPageView(),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
         elevation: 0.0,
         backgroundColor: whiteColor,
         selectedItemColor: primaryColor,
