@@ -205,11 +205,11 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   ),
                 ),
                 const Divider(),
-                FutureBuilder(
-                  future: FirebaseFirestore.instance
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
                       .collection('posts')
                       .where('uid', isEqualTo: widget.uid)
-                      .get(),
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
