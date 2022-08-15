@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:amigos_hackalearn/screen/post_screen.dart';
 import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,115 +23,119 @@ class _DetailScreenState extends State<DetailScreen> {
     String formatteddate = DateFormat('yyyy-MM-dd').format(createddate);
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: primaryColor,
-        appBar: AppBar(
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back, color: primaryColor),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          backgroundColor: whiteColor,
-          title: Text(
-            widget.post.postTitle,
-            style: TextStyle(color: primaryColor),
-          ),
-          actions: currentUid == widget.post.uid
-              ? <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    color: primaryColor,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      //수정상태와 최초 글쓰기 상태를 PostScreen에서 설정해줘야
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  PostScreen(uid: widget.post.uid)));
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: primaryColor,
-                    onPressed: () async {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text('게시글 삭제'),
-                          content: Text('게시글을 삭제할까요?'),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text(
-                                '취소',
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              onPressed: () {
-                                Navigator.of(ctx).pop(false);
-                              },
+      resizeToAvoidBottomInset: false,
+      backgroundColor: primaryColor,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: primaryColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: whiteColor,
+        title: Text(
+          widget.post.postTitle,
+          style: const TextStyle(color: primaryColor),
+        ),
+        actions: currentUid == widget.post.uid
+            ? <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  color: primaryColor,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    //수정상태와 최초 글쓰기 상태를 PostScreen에서 설정해줘야
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PostScreen(uid: widget.post.uid),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  color: primaryColor,
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('게시글 삭제'),
+                        content: const Text('게시글을 삭제할까요?'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(
+                              '취소',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
                             ),
-                            FlatButton(
-                              child: Text(
-                                '확인',
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              onPressed: () async {
-                                Navigator.of(ctx).pop(true);
-                                try {
-                                  Navigator.pop(context);
-                                  final FirebaseFirestore firestore =
-                                      FirebaseFirestore.instance;
-                                  DateTime day = widget.post.dateTime;
-                                  String tmpDate = day.year.toString() +
-                                      day.month.toString() +
-                                      day.day.toString();
+                            onPressed: () {
+                              Navigator.of(ctx).pop(false);
+                            },
+                          ),
+                          TextButton(
+                            child: Text(
+                              '확인',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            onPressed: () async {
+                              Navigator.of(ctx).pop(true);
+                              try {
+                                Navigator.pop(context);
+                                final FirebaseFirestore firestore =
+                                    FirebaseFirestore.instance;
+                                DateTime day = widget.post.dateTime;
+                                String tmpDate = day.year.toString() +
+                                    day.month.toString() +
+                                    day.day.toString();
 
-                                  DocumentReference docUser = FirebaseFirestore
-                                      .instance
-                                      .collection('users')
-                                      .doc(widget.post.uid);
+                                DocumentReference docUser = FirebaseFirestore
+                                    .instance
+                                    .collection('users')
+                                    .doc(widget.post.uid);
 
-                                  docUser.update({
-                                    "saved": FieldValue.increment(
-                                        widget.post.saved * (-1)),
-                                    "implements":
-                                        FieldValue.arrayRemove([tmpDate])
-                                  });
-                                  firestore
-                                      .collection('posts')
-                                      .doc(widget.post.id)
-                                      .delete();
-                                } catch (error) {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                docUser.update({
+                                  "saved": FieldValue.increment(
+                                      widget.post.saved * (-1)),
+                                  "implements":
+                                      FieldValue.arrayRemove([tmpDate])
+                                });
+                                firestore
+                                    .collection('posts')
+                                    .doc(widget.post.id)
+                                    .delete();
+                              } catch (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
                                     content: Text(
                                       "삭제하지 못했습니다.",
                                       textAlign: TextAlign.center,
                                     ),
-                                  ));
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ]
-              : null,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Card(
-                color: whiteColor,
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-                margin: const EdgeInsets.all(30),
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  child: Column(children: <Widget>[
+              ]
+            : null,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Card(
+              color: whiteColor,
+              shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              margin: const EdgeInsets.all(30),
+              child: Container(
+                margin: const EdgeInsets.all(20),
+                child: Column(
+                  children: <Widget>[
                     //프로필 사진 & author
                     ListTile(
                       leading: CircleAvatar(),
@@ -142,7 +144,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     //게시물 사진
@@ -157,7 +159,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     //발행 날짜
@@ -166,33 +168,35 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Spacer(
+                          const Spacer(
                             flex: 20,
                           ),
                           Text(
                             formatteddate,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
-                          Spacer(
+                          const Spacer(
                             flex: 4,
                           ),
                           Text(
                             widget.post.saved.toString(),
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
-                          Spacer(),
-                          Text(
+                          const Spacer(),
+                          const Text(
                             '원 절약',
                             style: TextStyle(color: Colors.black),
-                          )
+                          ),
                         ],
                       ),
                     ),
-                  ]),
+                  ],
                 ),
-              )
-            ],
-          ),
-        ));
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
