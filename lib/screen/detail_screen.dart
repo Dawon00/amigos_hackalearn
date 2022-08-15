@@ -1,9 +1,11 @@
+import 'package:amigos_hackalearn/model/user.dart' as model;
 import 'package:amigos_hackalearn/screen/post_screen.dart';
 import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 import '../model/post.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -17,11 +19,47 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  late final model.User user;
+  bool isLoading = false;
+
+  void setUser() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      DocumentSnapshot userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .get();
+      user = model.User.fromSnap(userSnap);
+      print(user);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime createddate = widget.post.dateTime;
     String formatteddate = DateFormat('yyyy-MM-dd').format(createddate);
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
+    final TextEditingController commentController = TextEditingController();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryColor,
@@ -138,10 +176,10 @@ class _DetailScreenState extends State<DetailScreen> {
                   children: <Widget>[
                     //프로필 사진 & author
                     ListTile(
-                      leading: CircleAvatar(),
+                      leading: const CircleAvatar(),
                       title: Text(
                         widget.post.author,
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                     const SizedBox(
@@ -152,10 +190,10 @@ class _DetailScreenState extends State<DetailScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: EdgeInsets.fromLTRB(25, 10, 0, 0),
+                        margin: const EdgeInsets.fromLTRB(25, 10, 0, 0),
                         child: Text(
                           widget.post.content,
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
@@ -164,7 +202,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     //발행 날짜
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -194,8 +232,167 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
             ),
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('posts')
+                  .doc(widget.post.id)
+                  .collection('comments')
+                  .orderBy(
+                    'datePublished',
+                    descending: true,
+                  )
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  itemBuilder: (context, index) => CommentCard(
+                    snap: (snapshot.data! as dynamic).docs[index].data(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: isLoading
+            ? Container()
+            : Container(
+                height: kToolbarHeight,
+                margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                padding: const EdgeInsets.only(left: 16, right: 8),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(user.photoUrl),
+                      radius: 18,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 8),
+                        child: TextField(
+                          controller: commentController,
+                          decoration: InputDecoration(
+                            hintText: 'Comment as ${user.username}',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        try {
+                          if (commentController.text.isNotEmpty) {
+                            String commentId = const Uuid().v1();
+                            await FirebaseFirestore.instance
+                                .collection('posts')
+                                .doc(widget.post.id)
+                                .collection('comments')
+                                .doc(commentId)
+                                .set({
+                              'profileImage': user.photoUrl,
+                              'name': user.username,
+                              'text': commentController.text,
+                              'commentId': commentId,
+                              'datePublished': DateTime.now(),
+                            });
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                            ),
+                          );
+                        }
+
+                        setState(() {
+                          commentController.text = '';
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 8,
+                        ),
+                        child: const Text(
+                          'Post',
+                          style: TextStyle(color: primaryColor),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+      ),
+    );
+  }
+}
+
+class CommentCard extends StatefulWidget {
+  final snap;
+  const CommentCard({Key? key, required this.snap}) : super(key: key);
+
+  @override
+  State<CommentCard> createState() => _CommentCardState();
+}
+
+class _CommentCardState extends State<CommentCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(widget.snap['profileImage']),
+            radius: 18,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: widget.snap['name'],
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text: '  ${widget.snap['text']}',
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      DateFormat.yMMMd().format(
+                        widget.snap['datePublished'].toDate(),
+                      ),
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
