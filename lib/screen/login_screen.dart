@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
               // ),
               Container(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: const Text(
                   'Login to your Account',
                   style: TextStyle(
                     color: whiteColor,

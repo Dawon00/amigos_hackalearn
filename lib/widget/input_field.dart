@@ -21,9 +21,8 @@ class InputField extends StatelessWidget {
       decoration: InputDecoration(
         filled: true,
         fillColor: whiteColor,
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: primaryColor),
-          //borderRadius: BorderRadius.circular(50)
         ),
         labelText: hintText,
         labelStyle: const TextStyle(color: primaryColor),

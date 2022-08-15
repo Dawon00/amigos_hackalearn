@@ -59,7 +59,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         : Scaffold(
             backgroundColor: whiteColor,
             appBar: AppBar(
-              title: Text(
+              title: const Text(
                 '마이페이지',
                 style: TextStyle(color: primaryColor),
               ),
@@ -84,12 +84,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               children: [
                                 Row(
                                   children: [
-                                    Container(
-                                      child: Text(
-                                        user.username,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
+                                    Text(
+                                      user.username,
+                                      style: const TextStyle(
+                                        color: Colors.black,
                                       ),
                                     ),
                                     Container(
@@ -112,7 +110,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   child: Text(
                                     '아낀 금액은 ${user.saved.toString()}원',
                                     textAlign: TextAlign.end,
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 ),
                                 Container(
@@ -120,7 +118,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   child: Text(
                                     '총 ${user.implements.length.toString()}일 절약 실천중',
                                     textAlign: TextAlign.end,
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 ),
                                 const SizedBox(
@@ -130,7 +128,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Spacer(
+                                    const Spacer(
                                       flex: 5,
                                     ),
                                     TextButton(
@@ -141,7 +139,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           18.0),
-                                                  side: BorderSide(
+                                                  side: const BorderSide(
                                                       color: primaryColor)))),
                                       onPressed: () async {
                                         if (!mounted) return;
@@ -161,7 +159,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                         ),
                                       ),
                                     ),
-                                    Spacer(
+                                    const Spacer(
                                       flex: 1,
                                     ),
                                     TextButton(
@@ -172,7 +170,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           18.0),
-                                                  side: BorderSide(
+                                                  side: const BorderSide(
                                                       color: primaryColor)))),
                                       onPressed: () async {
                                         FirebaseAuth auth =
@@ -193,7 +191,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                         ),
                                       ),
                                     ),
-                                    Spacer(
+                                    const Spacer(
                                       flex: 1,
                                     ),
                                   ],
