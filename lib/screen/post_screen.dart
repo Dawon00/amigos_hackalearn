@@ -1,26 +1,27 @@
-import 'dart:convert';
 import 'dart:typed_data';
 import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:intl/intl.dart';
 
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/user.dart' as model;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:amigos_hackalearn/model/post.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:http/http.dart';
 import '../widget/input_field.dart';
 import 'package:uuid/uuid.dart';
 
 class PostScreen extends StatefulWidget {
   final String uid;
+  final bool isPost;
+  final originPost;
 
-  const PostScreen({Key? key, required this.uid}) : super(key: key);
+  const PostScreen({
+    Key? key,
+    required this.uid,
+    this.isPost = true,
+    this.originPost,
+  }) : super(key: key);
 
   @override
   State<PostScreen> createState() => _PostScreenState();
@@ -31,14 +32,10 @@ class _PostScreenState extends State<PostScreen> {
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   Uint8List? _image;
-  String postId = Uuid().v4();
-  var _isLoading = false;
+
+  String postId = const Uuid().v4();
   late final model.User user;
   void setUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-
     try {
       DocumentSnapshot userSnap = await FirebaseFirestore.instance
           .collection('users')
@@ -52,15 +49,17 @@ class _PostScreenState extends State<PostScreen> {
         ),
       );
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
   void initState() {
     super.initState();
     setUser();
+    if (!widget.isPost) {
+      _postTitlecontroller.text = widget.originPost.postTitle;
+      _contentController.text = widget.originPost.content;
+      _priceController.text = widget.originPost.saved.toString();
+    }
   }
 
   Future<void> _sendPost(
@@ -72,7 +71,6 @@ class _PostScreenState extends State<PostScreen> {
       required String uid,
       required int saved,
       required String profileImg}) async {
-    late String res;
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final FirebaseStorage storage = FirebaseStorage.instance;
@@ -91,17 +89,26 @@ class _PostScreenState extends State<PostScreen> {
           saved: saved,
           profileImg: profileImg);
       firestore.collection('posts').doc(postId).set(post.toJson());
-      res = "success";
+
+      DocumentReference doc =
+          FirebaseFirestore.instance.collection('users').doc(user.uid);
+      final DateTime now = DateTime.now();
+      doc.update(
+        {
+          "saved": user.saved + saved,
+          "implements":
+              FieldValue.arrayUnion([DateTime(now.year, now.month, now.day)])
+        },
+      );
     } catch (e) {
-      res = e.toString();
       await showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: Text('An error ocurred.'),
-          content: Text('오류가 발생했습니다.'),
+          title: const Text('An error ocurred.'),
+          content: const Text('오류가 발생했습니다.'),
           actions: <Widget>[
-            FlatButton(
-              child: Text('확인'),
+            TextButton(
+              child: const Text('확인'),
               onPressed: () {
                 Navigator.of(ctx).pop();
               },
@@ -110,27 +117,60 @@ class _PostScreenState extends State<PostScreen> {
         ),
       );
     }
-
-    setState(() {
-      _isLoading = false;
-    });
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
-  // Future<void> _editPost(){
-  //
-  // }
+  Future<void> updatePost({
+    required String title,
+    required String content,
+    required int saved,
+  }) async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final FirebaseStorage storage = FirebaseStorage.instance;
+      String photoUrl = '';
+
+      if (_image != null) {
+        Reference ref =
+            storage.ref().child('postImages').child(widget.originPost.id);
+        TaskSnapshot snapshot = await ref.putData(_image!);
+        photoUrl = await snapshot.ref.getDownloadURL();
+      }
+
+      final DocumentReference doc =
+          firestore.collection('posts').doc(widget.originPost.id);
+      await doc.update({
+        "postTitle": title,
+        "content": content,
+        "photoUrl": photoUrl.isEmpty ? widget.originPost.photoUrl : photoUrl,
+        "saved": saved,
+      });
+
+      await firestore.collection('users').doc(widget.uid).update(
+          {'saved': FieldValue.increment(saved - widget.originPost.saved)});
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+    if (!mounted) return;
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back, color: primaryColor),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: primaryColor),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          '글쓰기',
-          style: TextStyle(color: primaryColor),
+          widget.isPost ? '글쓰기' : '편집하기',
+          style: const TextStyle(color: primaryColor),
         ),
         backgroundColor: whiteColor,
       ),
@@ -138,18 +178,31 @@ class _PostScreenState extends State<PostScreen> {
         children: [
           Stack(
             children: [
-              // 프로필 이미지 선택 UI
-              _image != null
-                  ? Image(
-                      image: MemoryImage(_image!),
-                      width: 150,
-                      height: 150,
-                    )
-                  : const Image(
-                      image: AssetImage('assets/default_photo.png'),
-                      width: 150,
-                      height: 150,
-                    ),
+              widget.isPost
+                  ?
+                  // 프로필 이미지 선택 UI
+                  _image != null
+                      ? Image(
+                          image: MemoryImage(_image!),
+                          width: 150,
+                          height: 150,
+                        )
+                      : const Image(
+                          image: AssetImage('assets/default_photo.png'),
+                          width: 150,
+                          height: 150,
+                        )
+                  : _image != null
+                      ? Image(
+                          image: MemoryImage(_image!),
+                          width: 150,
+                          height: 150,
+                        )
+                      : Image(
+                          image: NetworkImage(widget.originPost.photoUrl),
+                          width: 150,
+                          height: 150,
+                        ),
               Positioned(
                 bottom: -10,
                 left: 80,
@@ -157,9 +210,11 @@ class _PostScreenState extends State<PostScreen> {
                   // 이미지 선택 기능
                   onPressed: () async {
                     Uint8List img = await pickImage(ImageSource.gallery);
-                    setState(() {
-                      _image = img;
-                    });
+                    setState(
+                      () {
+                        _image = img;
+                      },
+                    );
                   },
                   icon: const Icon(Icons.add_a_photo),
                 ),
@@ -168,21 +223,22 @@ class _PostScreenState extends State<PostScreen> {
           ),
           Column(
             children: [
-              Text('글 제목'),
+              const Text('글 제목'),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: InputField(
-                    textEditingController: _postTitlecontroller,
-                    hintText: "글 제목을 입력해주세요",
-                    inputType: TextInputType.text),
+                  textEditingController: _postTitlecontroller,
+                  hintText: "글 제목을 입력해주세요",
+                  inputType: TextInputType.text,
+                ),
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           //본문 입력
           Column(
             children: [
-              Text('본문 내용'),
+              const Text('본문 내용'),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: InputField(
@@ -192,11 +248,11 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
 
           Column(
             children: [
-              Text('아낀 금액'),
+              const Text('아낀 금액'),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: InputField(
@@ -206,63 +262,68 @@ class _PostScreenState extends State<PostScreen> {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
 
           InkWell(
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: Text(
-                  '완료',
-                  style: TextStyle(
-                    color: whiteColor,
-                    fontWeight: FontWeight.bold,
+            child: Container(
+              margin: const EdgeInsets.all(10),
+              width: double.infinity,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: const ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: whiteColor),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(4),
                   ),
                 ),
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: const ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: whiteColor),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(4),
-                    ),
-                  ),
-                  color: primaryColor,
+                color: primaryColor,
+              ),
+              child: const Text(
+                '완료',
+                style: TextStyle(
+                  color: whiteColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              onTap: () {
-                final int _saved = int.parse(_priceController.text);
-                final dateTime = DateTime.now();
-                //user정보 확인
-                print(user.username);
+            ),
+            onTap: () {
+              final int saved = int.parse(_priceController.text);
+              final dateTime = DateTime.now();
+              //user정보 확인
+              if (widget.isPost) {
                 _sendPost(
-                    postTitle: _postTitlecontroller.text,
-                    dateTime: dateTime,
-                    content: _contentController.text,
-                    file: _image!,
-                    author: user.username,
-                    uid: user.uid,
-                    saved: _saved,
-                    profileImg: user.photoUrl);
-                String tmpDate = dateTime.year.toString() +
-                    dateTime.month.toString() +
-                    dateTime.day.toString();
-
-                DocumentReference doc = FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(user.uid);
-                doc.update({
-                  "saved": user.saved + _saved,
-                  "implements": FieldValue.arrayUnion(['220816'])
-                });
-                print(user.implements);
-              }),
-          Spacer(
+                  postTitle: _postTitlecontroller.text,
+                  dateTime: dateTime,
+                  content: _contentController.text,
+                  file: _image!,
+                  author: user.username,
+                  uid: user.uid,
+                  saved: saved,
+                  profileImg: user.photoUrl,
+                );
+              } else {
+                updatePost(
+                  title: _postTitlecontroller.text,
+                  content: _contentController.text,
+                  saved: int.parse(_priceController.text),
+                );
+              }
+            },
+          ),
+          const Spacer(
             flex: 5,
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _contentController.dispose();
+    _priceController.dispose();
+    _postTitlecontroller.dispose();
   }
 }

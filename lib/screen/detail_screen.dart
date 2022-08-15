@@ -1,4 +1,5 @@
 import 'package:amigos_hackalearn/model/user.dart' as model;
+import 'package:amigos_hackalearn/screen/home_screen.dart';
 import 'package:amigos_hackalearn/screen/post_screen.dart';
 import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -33,7 +34,6 @@ class _DetailScreenState extends State<DetailScreen> {
           .doc(widget.uid)
           .get();
       user = model.User.fromSnap(userSnap);
-      print(user);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -84,7 +84,11 @@ class _DetailScreenState extends State<DetailScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PostScreen(uid: widget.post.uid),
+                        builder: (context) => PostScreen(
+                          uid: widget.post.uid,
+                          isPost: false,
+                          originPost: widget.post,
+                        ),
                       ),
                     );
                   },
@@ -95,7 +99,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   onPressed: () async {
                     showDialog(
                       context: context,
-                      builder: (ctx) => AlertDialog(
+                      builder: (context) => AlertDialog(
                         title: const Text('게시글 삭제'),
                         content: const Text('게시글을 삭제할까요?'),
                         actions: <Widget>[
@@ -106,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: Theme.of(context).primaryColor),
                             ),
                             onPressed: () {
-                              Navigator.of(ctx).pop(false);
+                              Navigator.of(context).pop();
                             },
                           ),
                           TextButton(
@@ -116,40 +120,29 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: Theme.of(context).primaryColor),
                             ),
                             onPressed: () async {
-                              Navigator.of(ctx).pop(true);
-                              try {
-                                Navigator.pop(context);
-                                final FirebaseFirestore firestore =
-                                    FirebaseFirestore.instance;
-                                DateTime day = widget.post.dateTime;
-                                String tmpDate = day.year.toString() +
-                                    day.month.toString() +
-                                    day.day.toString();
-
-                                DocumentReference docUser = FirebaseFirestore
-                                    .instance
-                                    .collection('users')
-                                    .doc(widget.post.uid);
-
-                                docUser.update({
-                                  "saved": FieldValue.increment(
-                                      widget.post.saved * (-1)),
-                                  "implements":
-                                      FieldValue.arrayRemove([tmpDate])
-                                });
-                                firestore
-                                    .collection('posts')
-                                    .doc(widget.post.id)
-                                    .delete();
-                              } catch (error) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "삭제하지 못했습니다.",
-                                      textAlign: TextAlign.center,
+                              if (user.uid == widget.post.uid) {
+                                try {
+                                  FirebaseFirestore.instance
+                                      .collection('posts')
+                                      .doc(widget.post.id)
+                                      .delete();
+                                  await firestore
+                                      .collection('users')
+                                      .doc(widget.uid)
+                                      .update({
+                                    'saved':
+                                        FieldValue.increment(-widget.post.saved)
+                                  });
+                                  if (!mounted) return;
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(e.toString()),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
                               }
                             },
                           ),
