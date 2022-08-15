@@ -25,7 +25,9 @@ class PostCard extends StatelessWidget {
             margin: EdgeInsets.all(20),
             child: Column(children: <Widget>[
               ListTile(
-                leading: CircleAvatar(),
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(post.profileImg),
+                ),
                 title: Text(
                   post.author,
                   style: TextStyle(color: Colors.black),

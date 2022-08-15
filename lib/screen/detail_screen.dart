@@ -169,7 +169,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   children: <Widget>[
                     //프로필 사진 & author
                     ListTile(
-                      leading: const CircleAvatar(),
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(widget.post.profileImg),
+                      ),
                       title: Text(
                         widget.post.author,
                         style: const TextStyle(color: Colors.black),
