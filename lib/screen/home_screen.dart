@@ -23,18 +23,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Image.asset(
-          'assets/icons8-돈-상자.gif',
+        leading: Container(
+          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: Image.asset(
+            'assets/icons8-돈-상자.gif',
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
-          "절친들의 절약Tip",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'NemojinBold',
+        title: Container(
+          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: Text(
+            "절친들의 절약Tip",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontFamily: 'NemojinBold',
+            ),
           ),
         ),
       ),
