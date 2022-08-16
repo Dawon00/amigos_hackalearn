@@ -38,6 +38,8 @@ dependencies:
   intl: ^0.17.0
   provider: ^6.0.3
   uuid: ^3.0.6
+  app_popup_menu: ^1.0.0
+  set_state: ^1.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
