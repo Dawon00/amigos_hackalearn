@@ -220,18 +220,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     const SizedBox(
                       height: 14,
                     ),
-                    // Align(
-                    //   alignment: Alignment.bottomLeft,
-                    //   child: Text(
-                    //     widget.post.postTitle,
-                    //     style: TextStyle(
-                    //       color: Colors.black,
-                    //       fontSize: 20,
-                    //       //fontWeight: FontWeight.bold,
-                    //       //fontFamily: 'Regular'
-                    //     ),
-                    //   ),
-                    // ),
+
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -289,7 +278,11 @@ class _DetailScreenState extends State<DetailScreen> {
                   return Container(
                     margin: EdgeInsets.fromLTRB(20, 10, 0, 10),
                     alignment: Alignment.centerLeft,
-                    child: Container(child: Text('댓글 ' + len! + ' 개')),
+                    child: Container(
+                        child: Text(
+                      '댓글 ' + len! + ' 개',
+                      style: TextStyle(color: Colors.black),
+                    )),
                   );
                 }
               }),
@@ -342,8 +335,13 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16, right: 8),
                         child: TextField(
+                          style: const TextStyle(color: Colors.black),
                           controller: commentController,
                           decoration: InputDecoration(
+                            labelStyle: const TextStyle(
+                              color: Colors.black,
+                              //fontWeight: FontWeight.bold,
+                            ),
                             hintText: 'Comment as ${user.username}',
                             border: InputBorder.none,
                           ),
@@ -371,7 +369,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(e.toString()),
+                              content: Text(
+                                e.toString(),
+                              ),
                             ),
                           );
                         }
@@ -387,7 +387,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                         child: const Text(
                           'Post',
-                          style: TextStyle(color: primaryColor),
+                          style: TextStyle(color: ButtonColor),
                         ),
                       ),
                     ),
@@ -433,29 +433,21 @@ class _CommentCardState extends State<CommentCard> {
                         TextSpan(
                           text: widget.snap['name'],
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Regular'),
+                            color: Colors.black,
+                            fontSize: 15,
+                            //fontWeight: FontWeight.bold,
+                            //fontFamily: 'Regular'
+                          ),
                         ),
                         TextSpan(
                           text: '  ${widget.snap['text']}',
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontFamily: 'Regular'),
+                            color: Colors.black,
+                            fontSize: 13,
+                            //fontFamily: 'Regular'
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      DateFormat.yMMMd().format(
-                        widget.snap['datePublished'].toDate(),
-                      ),
-                      style: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],

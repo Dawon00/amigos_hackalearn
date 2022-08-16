@@ -399,7 +399,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               ],
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 40,
                             ),
                             Row(
                               children: [
@@ -432,7 +432,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           ],
                         ),
                       ),
-                      const Divider(),
+                      //const Divider(),
                       StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection('posts')
