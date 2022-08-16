@@ -199,7 +199,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'NanumMyeongjoBold'),
+                            fontFamily: 'Regular'),
                       ),
                     ),
                     const SizedBox(
@@ -207,16 +207,35 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                     //게시물 사진
                     Center(child: Image.network(widget.post.photoUrl)),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        widget.post.postTitle,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Regular'),
+                      ),
+                    ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(25, 10, 0, 0),
                         child: Text(
                           widget.post.content,
-                          style: const TextStyle(color: Colors.black),
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Regular'),
                         ),
                       ),
                     ),
+
                     const SizedBox(
                       height: 14,
                     ),
@@ -235,7 +254,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 color: Colors.black,
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: 'NemojinBold'),
+                                fontFamily: 'Regular'),
                           ),
                         ],
                       ),
