@@ -124,8 +124,13 @@ class _DetailScreenState extends State<DetailScreen> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: const Text('게시글 삭제'),
-                        content: const Text('게시글을 삭제할까요?'),
+                        backgroundColor: whiteColor,
+                        title: const Text(
+                          '게시글 삭제',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        content: const Text('게시글을 삭제할까요?',
+                            style: TextStyle(color: Colors.black)),
                         actions: <Widget>[
                           TextButton(
                             child: Text(
