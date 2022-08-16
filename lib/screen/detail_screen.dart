@@ -74,20 +74,26 @@ class _DetailScreenState extends State<DetailScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: whiteColor,
       appBar: AppBar(
-        leading: Image.asset(
-          'assets/logo_png.png',
-          width: 50,
-          height: 50,
-        ),
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(widget.post.postTitle,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'NemojinBold',
-            )),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: primaryColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Row(children: [
+          Spacer(),
+          Image.asset(
+            'assets/logo_png.png',
+            width: 30,
+          ),
+          Text(widget.post.postTitle,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'NemojinBold',
+              )),
+        ]),
         actions: currentUid == widget.post.uid
             ? <Widget>[
                 IconButton(
@@ -419,17 +425,20 @@ class _CommentCardState extends State<CommentCard> {
                       children: [
                         TextSpan(
                           text: widget.snap['name'],
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Regular'),
                         ),
                         TextSpan(
                           text: '  ${widget.snap['text']}',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 13,
+                              fontFamily: 'Regular'),
                         ),
                       ],
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Regular'),
                     ),
                   ),
                   Padding(
