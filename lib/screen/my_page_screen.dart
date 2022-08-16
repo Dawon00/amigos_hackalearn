@@ -77,14 +77,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               value: 1,
                               child: //프로필 편집 버튼
                                   TextButton(
-                                style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                            side: const BorderSide(
-                                                color: primaryColor)))),
                                 onPressed: () async {
                                   if (!mounted) return;
                                   await Navigator.of(context).push(
@@ -99,7 +91,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 child: const Text(
                                   '프로필 편집',
                                   style: TextStyle(
-                                    color: primaryColor,
+                                    color: Colors.black,
+                                    fontSize: 15,
                                   ),
                                 ),
                               ),
@@ -107,14 +100,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             PopupMenuItem(
                               value: 2,
                               child: TextButton(
-                                style: ButtonStyle(
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                            side: const BorderSide(
-                                                color: primaryColor)))),
                                 onPressed: () async {
                                   FirebaseAuth auth = FirebaseAuth.instance;
                                   await auth.signOut();
@@ -128,7 +113,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 child: const Text(
                                   '로그아웃',
                                   style: TextStyle(
-                                    color: primaryColor,
+                                    color: Colors.black,
+                                    fontSize: 15,
                                   ),
                                 ),
                               ),
@@ -208,12 +194,40 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           children: [
+                            Row(
+                              children: [
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: const EdgeInsets.all(8),
+                                  child: const Text(
+                                    '환영합니다,',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: const EdgeInsets.all(8),
+                                  child: Text(
+                                    user.username + ' 님!',
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                ),
+                              ],
+                            ),
                             Container(
                               width: double.infinity,
                               padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey[200],
+                                color: primaryColor.withOpacity(0.5),
                               ),
                               child: Column(children: [
                                 const SizedBox(
@@ -231,7 +245,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   user.username,
                                   style: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 30,
+                                    fontSize: 20,
                                   ),
                                 ),
                                 const SizedBox(
@@ -259,10 +273,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   alignment: Alignment.centerLeft,
                                   padding: const EdgeInsets.all(8),
                                   child: const Text(
-                                    '님이 지금까지',
+                                    '님은 지금까지',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 20,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -278,7 +292,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
+                                    color: primaryColor.withOpacity(0.2),
                                     spreadRadius: 5,
                                     blurRadius: 7,
                                     offset: Offset(
@@ -306,7 +320,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       '총 아낀 금액',
                                       textAlign: TextAlign.end,
                                       style: const TextStyle(
-                                          color: Colors.black, fontSize: 15),
+                                          color: Colors.black, fontSize: 20),
                                     ),
                                     Text(
                                       ' ${(snapshot.data! as dynamic)['saved'].toString()}  원',
@@ -331,7 +345,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
+                                    color: primaryColor.withOpacity(0.2),
                                     spreadRadius: 5,
                                     blurRadius: 7,
                                     offset: Offset(
@@ -367,7 +381,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     textAlign: TextAlign.end,
                                     style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 15,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ],
@@ -407,7 +421,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     '님의 절약 기록',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 20,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                     ),

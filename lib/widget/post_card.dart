@@ -51,10 +51,11 @@ class PostCard extends StatelessWidget {
                 title: Text(
                   post.author + '님 ' + post.saved.toString() + '원 절약 완료!',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Regular'),
+                    color: Colors.black,
+                    fontSize: 15,
+                    //fontWeight: FontWeight.bold,
+                    //fontFamily: 'Regular'
+                  ),
                 ),
               ),
               SizedBox(
@@ -68,35 +69,40 @@ class PostCard extends StatelessWidget {
                         bottomRight: Radius.circular(25),
                       ),
                       child: Image.network(post.photoUrl))),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  StreamBuilder<String>(
-                    stream: countComments(),
-                    builder: ((context, snapshot) {
-                      if (!snapshot.hasData) {
-                        // while data is loading:
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        final len = snapshot.data;
-                        return Text(
-                          len!,
-                          style: TextStyle(color: Colors.black),
-                        );
-                      }
-                    }),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    child:
-                        Icon(CupertinoIcons.bubble_right, color: Colors.black),
-                  )
-                ],
+              SizedBox(
+                height: 14,
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    StreamBuilder<String>(
+                      stream: countComments(),
+                      builder: ((context, snapshot) {
+                        if (!snapshot.hasData) {
+                          // while data is loading:
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          final len = snapshot.data;
+                          return Text(
+                            len!,
+                            style: TextStyle(color: Colors.black),
+                          );
+                        }
+                      }),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      child: Icon(CupertinoIcons.bubble_right,
+                          color: Colors.black),
+                    )
+                  ],
+                ),
               ),
             ]),
           ),

@@ -167,25 +167,26 @@ class _PostScreenState extends State<PostScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryColor),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Row(
-          children: [
-            Spacer(),
-            Image.asset(
-              'assets/icons8-돈-상자.gif',
-              width: 30,
+        leading: Container(
+          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: ButtonColor,
+              size: 30,
             ),
-            Text(widget.isPost ? '글쓰기' : '편집하기',
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'NemojinBold',
-                )),
-          ],
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        title: Container(
+          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: Text(widget.isPost ? '글쓰기' : '편집하기',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'NemojinBold',
+              )),
         ),
       ),
       body: Column(

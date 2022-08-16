@@ -76,24 +76,27 @@ class _DetailScreenState extends State<DetailScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryColor),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Row(children: [
-          Spacer(),
-          Image.asset(
-            'assets/logo_png.png',
-            width: 30,
+        leading: Container(
+          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: ButtonColor,
+              size: 30,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          Text(widget.post.postTitle,
+        ),
+        title: Container(
+          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: Text(widget.post.postTitle,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'NemojinBold',
               )),
-        ]),
+        ),
         actions: currentUid == widget.post.uid
             ? <Widget>[
                 IconButton(
@@ -202,10 +205,11 @@ class _DetailScreenState extends State<DetailScreen> {
                             widget.post.saved.toString() +
                             '원 절약 완료!',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Regular'),
+                          color: Colors.black,
+                          fontSize: 15,
+                          //fontWeight: FontWeight.bold,
+                          //fontFamily: 'Regular'
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -216,28 +220,30 @@ class _DetailScreenState extends State<DetailScreen> {
                     const SizedBox(
                       height: 14,
                     ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        widget.post.postTitle,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Regular'),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.bottomLeft,
+                    //   child: Text(
+                    //     widget.post.postTitle,
+                    //     style: TextStyle(
+                    //       color: Colors.black,
+                    //       fontSize: 20,
+                    //       //fontWeight: FontWeight.bold,
+                    //       //fontFamily: 'Regular'
+                    //     ),
+                    //   ),
+                    // ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        margin: const EdgeInsets.fromLTRB(25, 10, 0, 0),
+                        margin: const EdgeInsets.fromLTRB(5, 10, 0, 0),
                         child: Text(
                           widget.post.content,
                           style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Regular'),
+                            color: Colors.black,
+                            fontSize: 15,
+                            //fontWeight: FontWeight.bold,
+                            //fontFamily: 'Regular'
+                          ),
                         ),
                       ),
                     ),
@@ -257,10 +263,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                 createddate.day.toString() +
                                 '일의 절약 기록',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Regular'),
+                              color: Colors.black,
+                              fontSize: 15,
+                              //fontWeight: FontWeight.bold,
+                              //fontFamily: 'Regular'
+                            ),
                           ),
                         ],
                       ),
