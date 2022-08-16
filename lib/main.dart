@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Amigos',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: backgroundColor1,
-      ),
+      theme: ThemeData.dark()
+          .copyWith(scaffoldBackgroundColor: whiteColor //Color(0xFFF2F3F8),
+              ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

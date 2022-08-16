@@ -36,8 +36,10 @@ class PostCard extends StatelessWidget {
         Card(
           color: whiteColor,
           shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
+              borderRadius: BorderRadius.circular(25),
+              borderSide: BorderSide(color: Colors.transparent)),
+          shadowColor: primaryColor,
+          elevation: 11.0,
           margin: const EdgeInsets.all(30),
           child: Container(
             margin: EdgeInsets.all(20),
@@ -47,69 +49,26 @@ class PostCard extends StatelessWidget {
                   backgroundImage: NetworkImage(post.profileImg),
                 ),
                 title: Text(
-                  post.author,
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(20, 10, 0, 10),
-                  child: Text(
-                    post.postTitle,
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
+                  post.author + '님 ' + post.saved.toString() + '원 절약 완료!',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Regular'),
                 ),
               ),
               SizedBox(
                 height: 14,
               ),
               //게시물 사진
-              Center(child: Image.network(post.photoUrl)),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(25, 10, 0, 0),
-                  child: Text(
-                    post.content,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 14,
-              ),
+              Center(
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                      ),
+                      child: Image.network(post.photoUrl))),
 
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Spacer(
-                      flex: 20,
-                    ),
-                    Text(
-                      formatteddate,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    Spacer(
-                      flex: 4,
-                    ),
-                    Text(
-                      post.saved.toString(),
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    Spacer(),
-                    Text(
-                      '원 절약',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 14,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -141,7 +100,7 @@ class PostCard extends StatelessWidget {
               ),
             ]),
           ),
-        )
+        ),
       ],
     );
   }

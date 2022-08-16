@@ -78,7 +78,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(user.photoUrl),
-                            backgroundColor: secondaryColor,
+                            backgroundColor: ButtonColor,
                             radius: 40,
                           ),
                           Expanded(

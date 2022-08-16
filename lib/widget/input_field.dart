@@ -21,11 +21,15 @@ class InputField extends StatelessWidget {
       decoration: InputDecoration(
         filled: true,
         fillColor: whiteColor,
-        enabledBorder: const OutlineInputBorder(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: primaryColor),
         ),
         labelText: hintText,
-        labelStyle: const TextStyle(color: primaryColor),
+        labelStyle: const TextStyle(
+          color: TextColor,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       style: const TextStyle(color: Colors.black),
       keyboardType: inputType,
