@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: whiteColor,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Regular',
+                            //fontFamily: 'Regular',
                           ),
                         ),
                 ),
@@ -154,10 +154,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: const Text("계정이 없나요? ",
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Regular')),
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          //fontFamily: 'Regular'
+                        )),
                   ),
                   GestureDetector(
                       onTap: () {
@@ -174,10 +175,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Text(
                           "Sign up",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Regular'),
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            //fontFamily: 'Regular'
+                          ),
                         ),
                       )),
                 ],

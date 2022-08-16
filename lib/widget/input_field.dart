@@ -33,7 +33,7 @@ class InputField extends StatelessWidget {
       ),
       style: const TextStyle(
         color: Colors.black,
-        fontFamily: 'Regular',
+        // fontFamily: 'Regular',
         fontWeight: FontWeight.bold,
       ),
       keyboardType: inputType,

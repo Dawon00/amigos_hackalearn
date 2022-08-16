@@ -161,7 +161,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     shape: RoundedRectangleBorder(
                       side: BorderSide(color: whiteColor),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(4),
+                        Radius.circular(16),
                       ),
                     ),
                     color: primaryColor,
@@ -177,7 +177,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: TextStyle(
                             fontSize: 15,
                             color: whiteColor,
-                            fontFamily: 'Regular',
+                            //fontFamily: 'Regular',
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -202,7 +202,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       "계정이 있나요? ",
                       style: TextStyle(
                         color: Colors.black,
-                        fontFamily: 'Regular',
+                        //fontFamily: 'Regular',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -222,9 +222,10 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: const Text(
                         "Log in",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: 'Regular'),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          //fontFamily: 'Regular'
+                        ),
                       ),
                     ),
                   ),
