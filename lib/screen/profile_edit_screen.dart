@@ -27,8 +27,31 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('프로필 편집'),
-        backgroundColor: backgroundColor1,
+        elevation: 0,
+        leading: Container(
+          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: ButtonColor,
+              size: 30,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        title: Container(
+          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: Text(
+            "프로필 편집",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontFamily: 'NemojinBold',
+            ),
+          ),
+        ),
+        backgroundColor: whiteColor,
+        centerTitle: false,
         actions: [
           TextButton(
             onPressed: () async {
@@ -82,14 +105,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             },
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.resolveWith(
-                (states) => Colors.white.withOpacity(0.1),
+                (states) => Colors.black.withOpacity(0.1),
               ),
             ),
             child: isLoading
                 ? const CircularProgressIndicator()
                 : const Text(
                     "저장",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
           ),
         ],

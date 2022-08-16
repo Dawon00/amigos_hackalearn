@@ -184,7 +184,6 @@ class _PostScreenState extends State<PostScreen> {
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 30,
-                fontWeight: FontWeight.bold,
                 fontFamily: 'NemojinBold',
               )),
         ),
@@ -301,7 +300,7 @@ class _PostScreenState extends State<PostScreen> {
                   color: whiteColor,
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Regular',
+                  //fontFamily: 'Regular',
                 ),
               ),
             ),
