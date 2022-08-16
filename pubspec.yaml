@@ -55,6 +55,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -68,13 +69,13 @@ flutter:
   fonts:
     - family: NanumMyeongjoBold
       fonts:
-        - asset: 'fonts/NanumMyeongjo-Bold.ttf'
-    - family : Regular
+        - asset: "fonts/NanumMyeongjo-Bold.ttf"
+    - family: Regular
       fonts:
-        - asset: 'fonts/210 Nemojin 010.ttf'
-    - family : NemojinBold
+        - asset: "fonts/210 Nemojin 010.ttf"
+    - family: NemojinBold
       fonts:
-        - asset: 'fonts/210 네모진 040.ttf'
-  
+        - asset: "fonts/210 네모진 040.ttf"
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

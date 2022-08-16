@@ -43,12 +43,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: screenHeight * 0.0859375,
                 ),
               ),
-              Align(
-                child: Text("AMIGOS",
-                    style: TextStyle(
-                      fontSize: screenWidth * (30 / 360),
-                      color: Color.fromARGB(153, 0, 0, 0),
-                    )),
+              Container(
+                child: Image.asset(
+                  'assets/절약하는 친구들.gif',
+                  width: screenWidth * 0.616666,
+                  height: screenHeight * 0.0859375,
+                ),
               ),
               Expanded(child: SizedBox()),
               Align(

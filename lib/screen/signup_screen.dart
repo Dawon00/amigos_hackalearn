@@ -175,7 +175,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       : const Text(
                           'Sign up',
                           style: TextStyle(
+                            fontSize: 15,
                             color: whiteColor,
+                            fontFamily: 'Regular',
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -196,7 +198,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
                     ),
-                    child: const Text("계정이 있나요? "),
+                    child: const Text(
+                      "계정이 있나요? ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Regular',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -213,13 +222,17 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: const Text(
                         "Log in",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontFamily: 'Regular'),
                       ),
                     ),
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 100,
+              )
             ],
           ),
         ),
