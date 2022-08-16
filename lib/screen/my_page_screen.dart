@@ -61,6 +61,112 @@ class _MyPageScreenState extends State<MyPageScreen> {
         : Scaffold(
             backgroundColor: whiteColor,
             appBar: AppBar(
+              actions: [
+                Container(
+                  margin: EdgeInsets.all(10.0),
+                  child: PopupMenuButton(
+                    icon: new Icon(
+                      Icons.settings,
+                      size: 30,
+                      color: primaryColor,
+                    ),
+                    itemBuilder: ((context) => [
+                          PopupMenuItem(
+                            value: 1,
+                            child: //프로필 편집 버튼
+                                TextButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
+                                          side: const BorderSide(
+                                              color: primaryColor)))),
+                              onPressed: () async {
+                                if (!mounted) return;
+                                await Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProfileEditScreen(user: user),
+                                  ),
+                                );
+
+                                setUser();
+                              },
+                              child: const Text(
+                                '프로필 편집',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          PopupMenuItem(
+                            value: 2,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
+                                          side: const BorderSide(
+                                              color: primaryColor)))),
+                              onPressed: () async {
+                                FirebaseAuth auth = FirebaseAuth.instance;
+                                await auth.signOut();
+                                if (!mounted) return;
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                '로그아웃',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ]),
+                    offset: Offset(0, 100),
+                    color: whiteColor,
+                    elevation: 2,
+                    // on selected we show the dialog box
+                    onSelected: (value) {
+                      // if value 1 show dialog
+                      if (value == 1) {
+                        () async {
+                          if (!mounted) return;
+                          await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfileEditScreen(user: user),
+                            ),
+                          );
+
+                          setUser();
+                        };
+                        // if value 2 show dialog
+                      } else if (value == 2) {
+                        () async {
+                          FirebaseAuth auth = FirebaseAuth.instance;
+                          await auth.signOut();
+                          if (!mounted) return;
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
+                        };
+                      }
+                    },
+                  ),
+                )
+              ],
               elevation: 0,
               title: const Text(
                 '마이페이지',
@@ -256,63 +362,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               children: [
                                 const Spacer(
                                   flex: 1,
-                                ),
-                                TextButton(
-                                  style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.0),
-                                              side: const BorderSide(
-                                                  color: primaryColor)))),
-                                  onPressed: () async {
-                                    if (!mounted) return;
-                                    await Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ProfileEditScreen(user: user),
-                                      ),
-                                    );
-
-                                    setUser();
-                                  },
-                                  child: const Text(
-                                    '프로필 편집',
-                                    style: TextStyle(
-                                      color: primaryColor,
-                                    ),
-                                  ),
-                                ),
-                                const Spacer(
-                                  flex: 1,
-                                ),
-                                TextButton(
-                                  style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18.0),
-                                              side: const BorderSide(
-                                                  color: primaryColor)))),
-                                  onPressed: () async {
-                                    FirebaseAuth auth = FirebaseAuth.instance;
-                                    await auth.signOut();
-                                    if (!mounted) return;
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    '로그아웃',
-                                    style: TextStyle(
-                                      color: primaryColor,
-                                    ),
-                                  ),
                                 ),
                                 const Spacer(
                                   flex: 1,

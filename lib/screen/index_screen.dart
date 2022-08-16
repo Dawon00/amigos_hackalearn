@@ -18,11 +18,16 @@ class _IndexScreenState extends State<IndexScreen> {
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
       const BottomNavigationBarItem(
-          icon: Icon(Icons.view_day_rounded),
+          icon: Icon(
+            Icons.view_day_rounded,
+          ),
           label: '피드',
           backgroundColor: whiteColor),
       const BottomNavigationBarItem(
-          icon: Icon(Icons.child_care_rounded),
+          icon: Icon(
+            Icons.child_care_rounded,
+            size: 40,
+          ),
           label: '마이 페이지',
           backgroundColor: whiteColor)
     ];
