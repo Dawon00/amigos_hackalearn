@@ -165,15 +165,22 @@ class _PostScreenState extends State<PostScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryColor),
-          onPressed: () => Navigator.of(context).pop(),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: primaryColor),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            Spacer(),
+            Image.asset('assets/logo_png.png', width: 50, height: 50),
+            Text(
+              widget.isPost ? '글쓰기' : '편집하기',
+              style: const TextStyle(color: Colors.black),
+            ),
+          ],
         ),
-        title: Text(
-          widget.isPost ? '글쓰기' : '편집하기',
-          style: const TextStyle(color: primaryColor),
-        ),
-        backgroundColor: whiteColor,
       ),
       body: Column(
         children: [
@@ -189,7 +196,7 @@ class _PostScreenState extends State<PostScreen> {
                           height: 150,
                         )
                       : const Image(
-                          image: AssetImage('assets/default_photo.png'),
+                          image: AssetImage('assets/logo.png'),
                           width: 150,
                           height: 150,
                         )
@@ -208,6 +215,7 @@ class _PostScreenState extends State<PostScreen> {
                 bottom: -10,
                 left: 80,
                 child: IconButton(
+                  color: Colors.black,
                   // 이미지 선택 기능
                   onPressed: () async {
                     Uint8List img = await pickImage(ImageSource.gallery);

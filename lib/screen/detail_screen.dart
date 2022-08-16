@@ -75,7 +75,7 @@ class _DetailScreenState extends State<DetailScreen> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         leading: Image.asset(
-          'assets/logo.png',
+          'assets/logo_png.png',
           width: 50,
           height: 50,
         ),
@@ -92,7 +92,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ? <Widget>[
                 IconButton(
                   icon: const Icon(Icons.edit),
-                  color: primaryColor,
+                  color: ButtonColor,
                   onPressed: () {
                     Navigator.of(context).pop();
                     //수정상태와 최초 글쓰기 상태를 PostScreen에서 설정해줘야
@@ -110,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete),
-                  color: primaryColor,
+                  color: ButtonColor,
                   onPressed: () async {
                     showDialog(
                       context: context,

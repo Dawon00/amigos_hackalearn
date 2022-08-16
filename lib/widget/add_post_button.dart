@@ -14,7 +14,7 @@ class _AddPostButtonState extends State<AddPostButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: TextColor,
+      backgroundColor: ButtonColor,
       foregroundColor: primaryColor,
       onPressed: () {
         Navigator.push(

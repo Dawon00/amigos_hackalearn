@@ -34,21 +34,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Container(),
               ),
 
-              // // 메인 로고 이미지
-              // Image.asset(
-              //   'assets/dark_logo.png',
-              //   height: 120,
-              // ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  '안녕하세요,\n절친에 온것을 환영합니다',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
+              // 메인 로고 이미지
+              Image.asset(
+                'assets/logo.png',
+                height: 300,
               ),
+              // Container(
+              //   alignment: Alignment.centerLeft,
+              //   child: const Text(
+              //     '안녕하세요,\n절친에 온것을 환영합니다',
+              //     style: TextStyle(
+              //         color: primaryColor,
+              //         fontSize: 30,
+              //         fontWeight: FontWeight.bold),
+              //   ),
+              // ),
 
               const SizedBox(
                 height: 50,
@@ -130,7 +130,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Log in',
                           style: TextStyle(
                             color: whiteColor,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Regular',
                           ),
                         ),
                 ),
@@ -150,28 +152,34 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
                     ),
-                    child: const Text("계정이 없나요? "),
+                    child: const Text("계정이 없나요? ",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Regular')),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const SignupScreen(),
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const SignupScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
                         ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                      ),
-                      child: const Text(
-                        "Sign up",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                        child: const Text(
+                          "Sign up",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Regular'),
                         ),
-                      ),
-                    ),
-                  ),
+                      )),
                 ],
               ),
             ],
