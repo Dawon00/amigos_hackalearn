@@ -335,7 +335,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       textAlign: TextAlign.end,
                                       style: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -381,7 +381,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     textAlign: TextAlign.end,
                                     style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 20,
+                                        fontSize: 25,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
