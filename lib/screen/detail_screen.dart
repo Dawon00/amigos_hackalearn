@@ -56,7 +56,6 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     DateTime createddate = widget.post.dateTime;
-    String formatteddate = DateFormat('yyyy-MM-dd').format(createddate);
     final currentUid = FirebaseAuth.instance.currentUser!.uid;
     final TextEditingController commentController = TextEditingController();
 
@@ -73,17 +72,22 @@ class _DetailScreenState extends State<DetailScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: primaryColor,
+      backgroundColor: whiteColor,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: primaryColor),
-          onPressed: () => Navigator.of(context).pop(),
+        leading: Image.asset(
+          'assets/logo.png',
+          width: 50,
+          height: 50,
         ),
-        backgroundColor: whiteColor,
-        title: Text(
-          widget.post.postTitle,
-          style: const TextStyle(color: primaryColor),
-        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: Text(widget.post.postTitle,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'NemojinBold',
+            )),
         actions: currentUid == widget.post.uid
             ? <Widget>[
                 IconButton(
@@ -172,7 +176,10 @@ class _DetailScreenState extends State<DetailScreen> {
               color: whiteColor,
               shape: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
+              shadowColor: primaryColor,
+              elevation: 11.0,
               margin: const EdgeInsets.all(30),
               child: Container(
                 margin: const EdgeInsets.all(20),
@@ -184,8 +191,15 @@ class _DetailScreenState extends State<DetailScreen> {
                         backgroundImage: NetworkImage(widget.post.profileImg),
                       ),
                       title: Text(
-                        widget.post.author,
-                        style: const TextStyle(color: Colors.black),
+                        widget.post.author +
+                            '님 ' +
+                            widget.post.saved.toString() +
+                            '원 절약 완료!',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'NanumMyeongjoBold'),
                       ),
                     ),
                     const SizedBox(
@@ -212,24 +226,16 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const Spacer(
-                            flex: 20,
-                          ),
                           Text(
-                            formatteddate,
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                          const Spacer(
-                            flex: 4,
-                          ),
-                          Text(
-                            widget.post.saved.toString(),
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                          const Spacer(),
-                          const Text(
-                            '원 절약',
-                            style: TextStyle(color: Colors.black),
+                            createddate.month.toString() +
+                                '월' +
+                                createddate.day.toString() +
+                                '일의 절약 기록',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'NemojinBold'),
                           ),
                         ],
                       ),
@@ -400,6 +406,11 @@ class _CommentCardState extends State<CommentCard> {
                           text: '  ${widget.snap['text']}',
                         ),
                       ],
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Regular'),
                     ),
                   ),
                   Padding(

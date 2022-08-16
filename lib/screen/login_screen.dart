@@ -42,13 +42,14 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  'Login to your Account',
+                  '안녕하세요,\n절친에 온것을 환영합니다',
                   style: TextStyle(
-                    color: whiteColor,
-                    fontSize: 30,
-                  ),
+                      color: primaryColor,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
+
               const SizedBox(
                 height: 50,
               ),
@@ -114,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                       side: BorderSide(color: whiteColor),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(4),
+                        Radius.circular(16),
                       ),
                     ),
                     color: primaryColor,

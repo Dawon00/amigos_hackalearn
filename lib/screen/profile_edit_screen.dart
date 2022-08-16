@@ -109,12 +109,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   _image != null
                       ? CircleAvatar(
                           radius: 64,
-                          backgroundColor: secondaryColor,
+                          backgroundColor: ButtonColor,
                           backgroundImage: MemoryImage(_image!),
                         )
                       : CircleAvatar(
                           radius: 64,
-                          backgroundColor: secondaryColor,
+                          backgroundColor: ButtonColor,
                           backgroundImage: NetworkImage(widget.user.photoUrl),
                         ),
                   Positioned(

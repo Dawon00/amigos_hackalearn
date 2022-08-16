@@ -23,20 +23,25 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: whiteColor,
+        leading: Image.asset(
+          'assets/logo_png.png',
+          width: 50,
+          height: 50,
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
         title: Text(
-          '피드',
-          style: TextStyle(color: primaryColor),
+          "절친들의 절약Tip",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'NemojinBold',
+          ),
         ),
       ),
       body: StreamBuilder(
-        stream: firestore
-            .collection('posts')
-            .orderBy(
-              'dateTime',
-              descending: true,
-            )
-            .snapshots(),
+        stream: firestore.collection('posts').snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
