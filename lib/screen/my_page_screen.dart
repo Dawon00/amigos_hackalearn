@@ -220,6 +220,14 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                         fontSize: 20),
                                   ),
                                 ),
+                                Container(
+                                  child: Image.asset(
+                                    'assets/icons8-lol.gif',
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                               ],
                             ),
                             Container(
