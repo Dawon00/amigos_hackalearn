@@ -29,7 +29,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       appBar: AppBar(
         elevation: 0,
         leading: Container(
-          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
           child: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -40,8 +40,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           ),
         ),
         title: Container(
-          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-          child: Text(
+          margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: const Text(
             "프로필 편집",
             style: TextStyle(
               color: Colors.black,

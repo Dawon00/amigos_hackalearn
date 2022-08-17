@@ -5,7 +5,6 @@ import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import '../model/post.dart';
 
@@ -77,7 +76,7 @@ class _DetailScreenState extends State<DetailScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: Container(
-          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
           child: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -88,9 +87,9 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ),
         title: Container(
-          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+          margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
           child: Text(widget.post.postTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -190,7 +189,7 @@ class _DetailScreenState extends State<DetailScreen> {
               color: whiteColor,
               shape: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: const BorderSide(color: Colors.transparent),
               ),
               shadowColor: primaryColor,
               elevation: 11.0,
@@ -205,15 +204,10 @@ class _DetailScreenState extends State<DetailScreen> {
                         backgroundImage: NetworkImage(widget.post.profileImg),
                       ),
                       title: Text(
-                        widget.post.author +
-                            '님 ' +
-                            widget.post.saved.toString() +
-                            '원 절약 완료!',
-                        style: TextStyle(
+                        "${widget.post.author}님 ${widget.post.saved.toString()}원 절약 완료!",
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
-                          //fontWeight: FontWeight.bold,
-                          //fontFamily: 'Regular'
                         ),
                       ),
                     ),
@@ -235,8 +229,6 @@ class _DetailScreenState extends State<DetailScreen> {
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
-                            //fontWeight: FontWeight.bold,
-                            //fontFamily: 'Regular'
                           ),
                         ),
                       ),
@@ -252,15 +244,10 @@ class _DetailScreenState extends State<DetailScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            createddate.month.toString() +
-                                '월' +
-                                createddate.day.toString() +
-                                '일의 절약 기록',
-                            style: TextStyle(
+                            "${createddate.month.toString()}월 ${createddate.day.toString()}일의 절약 기록",
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 15,
-                              //fontWeight: FontWeight.bold,
-                              //fontFamily: 'Regular'
                             ),
                           ),
                         ],
@@ -272,25 +259,24 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             FutureBuilder<String>(
               future: countComments(),
-              builder: ((context, snapshot) {
+              builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   // while data is loading:
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else {
                   final len = snapshot.data;
                   return Container(
-                    margin: EdgeInsets.fromLTRB(20, 10, 0, 10),
+                    margin: const EdgeInsets.fromLTRB(20, 10, 0, 10),
                     alignment: Alignment.centerLeft,
-                    child: Container(
-                        child: Text(
-                      '댓글 ' + len! + ' 개',
-                      style: TextStyle(color: Colors.black),
-                    )),
+                    child: Text(
+                      "댓글 $len 개",
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   );
                 }
-              }),
+              },
             ),
             StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -437,7 +423,7 @@ class _CommentCardState extends State<CommentCard> {
                       children: [
                         TextSpan(
                           text: widget.snap['name'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
                             //fontWeight: FontWeight.bold,
@@ -446,7 +432,7 @@ class _CommentCardState extends State<CommentCard> {
                         ),
                         TextSpan(
                           text: '  ${widget.snap['text']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 13,
                             //fontFamily: 'Regular'

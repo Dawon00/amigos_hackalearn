@@ -23,7 +23,7 @@ class InputField extends StatelessWidget {
         fillColor: whiteColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: primaryColor),
+          borderSide: const BorderSide(color: primaryColor),
         ),
         labelText: hintText,
         labelStyle: const TextStyle(

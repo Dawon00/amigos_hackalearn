@@ -1,4 +1,3 @@
-import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(
-          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
           child: Image.asset(
             'assets/icons8-돈-상자.gif',
           ),
@@ -32,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: Container(
-          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-          child: Text(
+          margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+          child: const Text(
             "절친들의 절약Tip",
             style: TextStyle(
               color: Colors.black,
@@ -54,21 +53,21 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           final docs = snapshot.data!.docs;
           return ListView.builder(
-              itemCount: docs.length,
-              itemBuilder: (context, index) => GestureDetector(
-                    child: PostCard(
-                      post: Post.fromSnap(docs[index]),
-                    ),
-                    onTap: (() {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => DetailScreen(
-                                  post: Post.fromSnap(docs[index]),
-                                  uid:
-                                      FirebaseAuth.instance.currentUser!.uid)));
-                    }),
-                  ));
+            itemCount: docs.length,
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => DetailScreen(
+                            post: Post.fromSnap(docs[index]),
+                            uid: FirebaseAuth.instance.currentUser!.uid)));
+              },
+              child: PostCard(
+                post: Post.fromSnap(docs[index]),
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: const AddPostButton(),

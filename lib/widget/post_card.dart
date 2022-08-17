@@ -2,7 +2,6 @@ import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../model/post.dart';
 
@@ -11,13 +10,9 @@ class PostCard extends StatelessWidget {
   const PostCard({Key? key, required this.post}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    DateTime createddate = post.dateTime;
-    String formatteddate = DateFormat('yyyy-MM-dd').format(createddate);
-    late final len;
-
     Stream<String> countComments() async* {
       while (true) {
-        await Future.delayed(Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 500));
         final QuerySnapshot qSnap = await FirebaseFirestore.instance
             .collection('posts')
             .doc(post.id)
@@ -29,82 +24,78 @@ class PostCard extends StatelessWidget {
       }
     }
 
-    //len = countComments();
-
     return Column(
       children: <Widget>[
         Card(
           color: whiteColor,
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(color: Colors.transparent)),
+              borderSide: const BorderSide(color: Colors.transparent)),
           shadowColor: primaryColor,
           elevation: 11.0,
           margin: const EdgeInsets.all(30),
           child: Container(
-            margin: EdgeInsets.all(20),
-            child: Column(children: <Widget>[
-              ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(post.profileImg),
-                ),
-                title: Text(
-                  post.author + '님 ' + post.saved.toString() + '원 절약 완료!',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    //fontWeight: FontWeight.bold,
-                    //fontFamily: 'Regular'
+            margin: const EdgeInsets.all(20),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(post.profileImg),
+                  ),
+                  title: Text(
+                    '${post.author}님 ${post.saved}원 절약 완료!',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 14,
-              ),
-              //게시물 사진
-              Center(
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
-                      ),
-                      child: Image.network(post.photoUrl))),
-              SizedBox(
-                height: 14,
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    StreamBuilder<String>(
-                      stream: countComments(),
-                      builder: ((context, snapshot) {
-                        if (!snapshot.hasData) {
-                          // while data is loading:
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else {
-                          final len = snapshot.data;
-                          return Text(
-                            len!,
-                            style: TextStyle(color: Colors.black),
-                          );
-                        }
-                      }),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      child: Icon(CupertinoIcons.bubble_right,
-                          color: Colors.black),
-                    )
-                  ],
+                const SizedBox(
+                  height: 14,
                 ),
-              ),
-            ]),
+                //게시물 사진
+                Center(
+                    child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                        ),
+                        child: Image.network(post.photoUrl))),
+                const SizedBox(
+                  height: 14,
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      StreamBuilder<String>(
+                        stream: countComments(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            // while data is loading:
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            final len = snapshot.data;
+                            return Text(
+                              len!,
+                              style: const TextStyle(color: Colors.black),
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Icon(CupertinoIcons.bubble_right,
+                          color: Colors.black)
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

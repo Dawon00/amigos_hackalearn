@@ -1,5 +1,4 @@
 import 'package:amigos_hackalearn/screen/index_screen.dart';
-import 'package:amigos_hackalearn/screen/login_screen.dart';
 import 'package:amigos_hackalearn/screen/splash_screen.dart';
 import 'package:amigos_hackalearn/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';

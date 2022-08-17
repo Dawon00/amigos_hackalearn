@@ -24,11 +24,9 @@ class _AddPostButtonState extends State<AddPostButton> {
                   PostScreen(uid: FirebaseAuth.instance.currentUser!.uid)),
         );
       },
-      child: Container(
-        child: Icon(
-          Icons.add,
-          size: 30,
-        ),
+      child: const Icon(
+        Icons.add,
+        size: 30,
       ),
     );
   }

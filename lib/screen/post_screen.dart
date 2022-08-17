@@ -168,7 +168,7 @@ class _PostScreenState extends State<PostScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: Container(
-          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
           child: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -179,7 +179,7 @@ class _PostScreenState extends State<PostScreen> {
           ),
         ),
         title: Container(
-          margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
+          margin: const EdgeInsets.fromLTRB(0, 15, 0, 0),
           child: Text(widget.isPost ? '글쓰기' : '편집하기',
               style: const TextStyle(
                 color: Colors.black,
